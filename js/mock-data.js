@@ -49,3 +49,31 @@ const mockCustomerBookingsPerMonth = {
   labels: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
   data: [2, 3, 1, 4, 2, 3]
 };
+
+// admin dashboard
+const mockAdminStats = {
+  users: 1240,
+  shops: 85,
+  pending: 12,
+  posts: 3400
+};
+
+const mockAdminUsers = [
+  { name: "Juan", role: "Customer", status: "Active" },
+  { name: "Happy Paws", role: "Business", status: "Pending" }
+];
+
+const mockUserGrowth = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  data: [120, 340, 560, 780, 980, 1240]
+};
+
+const mockBookingsPerDay = {
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  data: [12, 18, 15, 22, 28, 45, 38]
+};
+
+const mockTopCities = {
+  labels: ['Manila', 'Quezon City', 'Makati', 'Pasig', 'Taguig'],
+  data: [320, 280, 190, 140, 110]
+};

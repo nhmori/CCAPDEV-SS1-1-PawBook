@@ -70,44 +70,176 @@
       </div>
     </div>
 
-    <h2 class="h6 fw-bold mb-3">BOOKING REQUESTS</h2>
-    <div class="table-responsive mb-4">
-      <table class="table align-middle">
-        <thead>
-          <tr>
-            <th class="small text-muted">DATE</th>
-            <th class="small text-muted">CUSTOMER</th>
-            <th class="small text-muted">PET</th>
-            <th class="small text-muted">SERVICE</th>
-            <th class="small text-muted text-end">ACTIONS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="small">Nov 15</td>
-            <td class="small">Juan</td>
-            <td class="small">Buddy</td>
-            <td class="small">Full Grooming</td>
-            <td class="text-end">
-              <button class="btn btn-dark btn-sm">ACCEPT</button>
-              <button class="btn btn-outline-dark btn-sm">REJECT</button>
-            </td>
-          </tr>
-          <tr>
-            <td class="small">Nov 16</td>
-            <td class="small">Maria</td>
-            <td class="small">Ming</td>
-            <td class="small">Bath & Dry</td>
-            <td class="text-end">
-              <button class="btn btn-dark btn-sm">ACCEPT</button>
-              <button class="btn btn-outline-dark btn-sm">REJECT</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <ul class="nav nav-tabs mb-3" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#overview-pane" type="button">Overview</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#services-pane" type="button">Services</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#branches-pane" type="button">Branches</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#clients-pane" type="button">Clients</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div class="tab-pane fade show active" id="overview-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">BOOKING REQUESTS</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">DATE</th>
+                <th class="small text-muted">CUSTOMER</th>
+                <th class="small text-muted">PET</th>
+                <th class="small text-muted">SERVICE</th>
+                <th class="small text-muted text-end">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="small">Nov 15</td>
+                <td class="small">Juan</td>
+                <td class="small">Buddy</td>
+                <td class="small">Full Grooming</td>
+                <td class="text-end">
+                  <button class="btn btn-dark btn-sm">ACCEPT</button>
+                  <button class="btn btn-outline-dark btn-sm">REJECT</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="small">Nov 16</td>
+                <td class="small">Maria</td>
+                <td class="small">Ming</td>
+                <td class="small">Bath & Dry</td>
+                <td class="text-end">
+                  <button class="btn btn-dark btn-sm">ACCEPT</button>
+                  <button class="btn btn-outline-dark btn-sm">REJECT</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="services-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">SERVICES & PRICING</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">SERVICE</th>
+                <th class="small text-muted">DURATION</th>
+                <th class="small text-muted">PRICE</th>
+                <th class="small text-muted text-end">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="small">Full Grooming</td>
+                <td class="small">2 hrs</td>
+                <td class="small">₱800</td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">EDIT</button>
+                  <button class="btn btn-dark btn-sm">DELETE</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="small">Bath & Dry</td>
+                <td class="small">1 hr</td>
+                <td class="small">₱400</td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">EDIT</button>
+                  <button class="btn btn-dark btn-sm">DELETE</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="small">Nail Trim</td>
+                <td class="small">30 min</td>
+                <td class="small">₱150</td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">EDIT</button>
+                  <button class="btn btn-dark btn-sm">DELETE</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="branches-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">BRANCHES</h2>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="h6 mb-1">QC Branch</h5>
+                <p class="small text-muted mb-1">Quezon City</p>
+                <p class="small mb-2">★ 4.8 · Open 9AM–6PM</p>
+                <button class="btn btn-outline-dark btn-sm w-100">MANAGE</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="h6 mb-1">Makati Branch</h5>
+                <p class="small text-muted mb-1">Makati</p>
+                <p class="small mb-2">★ 4.5 · Open 10AM–7PM</p>
+                <button class="btn btn-outline-dark btn-sm w-100">MANAGE</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="h6 mb-1">Pasig Branch</h5>
+                <p class="small text-muted mb-1">Pasig</p>
+                <p class="small mb-2">★ 4.6 · Closed</p>
+                <button class="btn btn-outline-dark btn-sm w-100">MANAGE</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="clients-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">CLIENTS</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">CLIENT</th>
+                <th class="small text-muted">PET</th>
+                <th class="small text-muted">LAST VISIT</th>
+                <th class="small text-muted text-end">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="small">Juan</td>
+                <td class="small">Buddy</td>
+                <td class="small">Nov 15</td>
+                <td class="text-end"><button class="btn btn-outline-dark btn-sm">VIEW</button></td>
+              </tr>
+              <tr>
+                <td class="small">Maria</td>
+                <td class="small">Ming</td>
+                <td class="small">Nov 16</td>
+                <td class="text-end"><button class="btn btn-outline-dark btn-sm">VIEW</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
 
-    <h2 class="h6 fw-bold mb-3">ANALYTICS</h2>
+    <h2 class="h6 fw-bold mb-3 mt-4">ANALYTICS</h2>
     <div class="row g-4 mb-4">
       <div class="col-md-4">
         <div class="card">
@@ -157,5 +289,6 @@
   <script src="js/mock-data.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/main.js"></script>
+  
 </body>
 </html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawBook — Admin Dashboard</title>
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">PAWBOOK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="find-groomer.html">EXPLORE</a></li>
+          <li class="nav-item"><a class="nav-link" href="find-groomer.html">BUSINESSES</a></li>
+          <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
+          <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
+          <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container py-4">
+    <h1 class="h4 fw-bold mb-4">Admin Dashboard</h1>
+
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <p class="small text-muted mb-1">USERS</p>
+            <h3 class="h4 fw-bold mb-0">1,240</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <p class="small text-muted mb-1">SHOPS</p>
+            <h3 class="h4 fw-bold mb-0">85</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <p class="small text-muted mb-1">PENDING</p>
+            <h3 class="h4 fw-bold mb-0">12</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <p class="small text-muted mb-1">POSTS</p>
+            <h3 class="h4 fw-bold mb-0">3,400</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-3" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#users-pane" type="button">Users</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#shops-pane" type="button">Shops</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#posts-pane" type="button">Posts</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reports-pane" type="button">Reports</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div class="tab-pane fade show active" id="users-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">USER MANAGEMENT</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">NAME</th>
+                <th class="small text-muted">TYPE</th>
+                <th class="small text-muted">STATUS</th>
+                <th class="small text-muted text-end">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="small">Juan</td>
+                <td class="small">Customer</td>
+                <td><span class="badge bg-dark">Active</span></td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">VIEW</button>
+                  <button class="btn btn-outline-dark btn-sm">EDIT</button>
+                  <button class="btn btn-outline-dark btn-sm">SUSPEND</button>
+                  <button class="btn btn-outline-dark btn-sm">DEACTIVATE</button>
+                  <button class="btn btn-dark btn-sm">DELETE</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="small">Happy Paws</td>
+                <td class="small">Business</td>
+                <td><span class="badge bg-secondary">Pending</span></td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">VIEW</button>
+                  <button class="btn btn-outline-dark btn-sm">EDIT</button>
+                  <button class="btn btn-dark btn-sm">APPROVE</button>
+                  <button class="btn btn-outline-dark btn-sm">REJECT</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="shops-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">SHOP MANAGEMENT</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">SHOP NAME</th>
+                <th class="small text-muted">CITY</th>
+                <th class="small text-muted">STATUS</th>
+                <th class="small text-muted text-end">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="small">Happy Paws</td>
+                <td class="small">Quezon City</td>
+                <td><span class="badge bg-secondary">Pending</span></td>
+                <td class="text-end">
+                  <button class="btn btn-dark btn-sm">APPROVE</button>
+                  <button class="btn btn-outline-dark btn-sm">REJECT</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="small">The Dog Barber</td>
+                <td class="small">Makati</td>
+                <td><span class="badge bg-dark">Verified</span></td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">VIEW</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="posts-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">POST MODERATION</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">AUTHOR</th>
+                <th class="small text-muted">CONTENT</th>
+                <th class="small text-muted">STATUS</th>
+                <th class="small text-muted text-end">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="small">Sarah Jenkins</td>
+                <td class="small">Took Milo for de-shedding...</td>
+                <td><span class="badge bg-dark">Visible</span></td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">HIDE</button>
+                  <button class="btn btn-dark btn-sm">DELETE</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="small">Happy Paws</td>
+                <td class="small">Pet pool sessions now open</td>
+                <td><span class="badge bg-dark">Visible</span></td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">HIDE</button>
+                  <button class="btn btn-dark btn-sm">DELETE</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="reports-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">REPORTS</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">REPORT ID</th>
+                <th class="small text-muted">TYPE</th>
+                <th class="small text-muted">REPORTED BY</th>
+                <th class="small text-muted text-end">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="small">#R-001</td>
+                <td class="small">Inappropriate Post</td>
+                <td class="small">Juan</td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">REVIEW</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="small">#R-002</td>
+                <td class="small">Spam Review</td>
+                <td class="small">Maria</td>
+                <td class="text-end">
+                  <button class="btn btn-outline-dark btn-sm">REVIEW</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="h6 fw-bold mb-3 mt-4">ANALYTICS</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="userGrowthChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="bookingsPerDayChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="topCitiesChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-top py-4 mt-5">
+    <div class="container d-flex justify-content-between">
+      <div>
+        <a href="#" class="text-decoration-none me-3">About</a>
+        <a href="#" class="text-decoration-none me-3">Contact</a>
+        <a href="#" class="text-decoration-none me-3">Privacy</a>
+        <a href="#" class="text-decoration-none">Terms</a>
+      </div>
+      <span class="text-muted">&copy; 2026 PawBook</span>
+    </div>
+  </footer>
+
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="js/mock-data.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

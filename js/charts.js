@@ -19,7 +19,7 @@ function drawCharts() {
 
   const has = id => document.getElementById(id);
 
-  ['popularServicesChart', 'ratingsChart', 'serviceBreakdownChart', 'customerBookingsChart'].forEach(id => {
+  ['popularServicesChart', 'ratingsChart', 'serviceBreakdownChart', 'customerBookingsChart', 'userGrowthChart', 'bookingsPerDayChart', 'topCitiesChart'].forEach(id => {
     const canvas = document.getElementById(id);
     if (canvas) {
       const existing = Chart.getChart(canvas);
@@ -132,6 +132,80 @@ function drawCharts() {
     });
   }
 
+  // ADMIN DASHBOARD CHART
+
+  // chart 5: user growth
+  if (has('userGrowthChart')) {
+    new Chart(has('userGrowthChart'), {
+      type: 'line',
+      data: {
+        labels: mockUserGrowth.labels,
+        datasets: [{
+          label: 'Users',
+          data: mockUserGrowth.data,
+          borderColor: accentColor,
+          backgroundColor: accentBg,
+          tension: 0.3,
+          fill: true
+        }]
+      },
+      options: {
+        ...sharedOptions,
+        plugins: {
+          ...sharedOptions.plugins,
+          legend: { display: false },
+          title: { display: true, text: 'User Growth', color: textColor }
+        }
+      }
+    });
+  }
+
+  // chart 6: bookings per day
+  if (has('bookingsPerDayChart')) {
+    new Chart(has('bookingsPerDayChart'), {
+      type: 'bar',
+      data: {
+        labels: mockBookingsPerDay.labels,
+        datasets: [{
+          label: 'Bookings',
+          data: mockBookingsPerDay.data,
+          backgroundColor: accentColor,
+          borderRadius: 6
+        }]
+      },
+      options: {
+        ...sharedOptions,
+        plugins: {
+          ...sharedOptions.plugins,
+          legend: { display: false },
+          title: { display: true, text: 'Bookings per Day', color: textColor }
+        }
+      }
+    });
+  }
+
+  // chart 7: top cities
+  if (has('topCitiesChart')) {
+    new Chart(has('topCitiesChart'), {
+      type: 'doughnut',
+      data: {
+        labels: mockTopCities.labels,
+        datasets: [{
+          data: mockTopCities.data,
+          backgroundColor: isDark
+            ? ['#6ea8fe', '#8bb9fe', '#a8c8ff', '#c5d8ff', '#e0e8ff']
+            : ['#212529', '#495057', '#6c757d', '#adb5bd', '#dee2e6']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: textColor } },
+          title: { display: true, text: 'Top Cities', color: textColor }
+        }
+      }
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', drawCharts);

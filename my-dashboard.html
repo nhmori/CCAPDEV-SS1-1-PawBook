@@ -70,85 +70,139 @@
       </div>
     </div>
 
-    <h2 class="h6 fw-bold mb-3">UPCOMING APPOINTMENTS</h2>
-    <div class="table-responsive mb-4">
-      <table class="table align-middle">
-        <thead>
-          <tr>
-            <th class="small text-muted">DATE</th>
-            <th class="small text-muted">BUSINESS</th>
-            <th class="small text-muted">SERVICE</th>
-            <th class="small text-muted text-end">STATUS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="small">Nov 15</td>
-            <td class="small">Happy Paws</td>
-            <td class="small">Full Groom</td>
-            <td class="text-end"><span class="badge bg-dark">Confirmed</span></td>
-          </tr>
-          <tr>
-            <td class="small">Nov 22</td>
-            <td class="small">Dogs & City</td>
-            <td class="small">Bath & Dry</td>
-            <td class="text-end"><span class="badge bg-secondary">Pending</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <ul class="nav nav-tabs mb-3" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#appointments-pane" type="button">Appointments</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pets-pane" type="button">My Pets</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#history-pane" type="button">History</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="appointments-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">UPCOMING APPOINTMENTS</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">DATE</th>
+                <th class="small text-muted">BUSINESS</th>
+                <th class="small text-muted">SERVICE</th>
+                <th class="small text-muted text-end">STATUS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="small">Nov 15</td>
+                <td class="small">Happy Paws</td>
+                <td class="small">Full Groom</td>
+                <td class="text-end"><span class="badge bg-dark">Confirmed</span></td>
+              </tr>
+              <tr>
+                <td class="small">Nov 22</td>
+                <td class="small">Dogs & City</td>
+                <td class="small">Bath & Dry</td>
+                <td class="text-end"><span class="badge bg-secondary">Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="pets-pane" role="tabpanel">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h6 fw-bold mb-0">MY PETS</h2>
+          <button class="btn btn-outline-dark btn-sm">+ ADD PET</button>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                  <small class="text-muted">🐕</small>
+                </div>
+                <h5 class="h6 mb-1">Buddy</h5>
+                <p class="small text-muted mb-0">Labrador</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                  <small class="text-muted">🐈</small>
+                </div>
+                <h5 class="h6 mb-1">Ming</h5>
+                <p class="small text-muted mb-0">Persian</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                  <small class="text-muted">🐕</small>
+                </div>
+                <h5 class="h6 mb-1">Max</h5>
+                <p class="small text-muted mb-0">Shih Tzu</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="card h-100 text-center">
+              <div class="card-body d-flex align-items-center justify-content-center">
+                <div>
+                  <h3 class="h4 mb-1">+</h3>
+                  <p class="small text-muted mb-0">Add Pet</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="history-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">PAST BOOKINGS</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">DATE</th>
+                <th class="small text-muted">BUSINESS</th>
+                <th class="small text-muted">SERVICE</th>
+                <th class="small text-muted text-end">STATUS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="small">Oct 12</td>
+                <td class="small">Happy Paws</td>
+                <td class="small">Full Groom</td>
+                <td class="text-end"><span class="badge bg-dark">Completed</span></td>
+              </tr>
+              <tr>
+                <td class="small">Sep 28</td>
+                <td class="small">The Dog Barber</td>
+                <td class="small">De-shedding</td>
+                <td class="text-end"><span class="badge bg-dark">Completed</span></td>
+              </tr>
+              <tr>
+                <td class="small">Sep 10</td>
+                <td class="small">Dogs & City</td>
+                <td class="small">Bath & Dry</td>
+                <td class="text-end"><span class="badge bg-dark">Completed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2 class="h6 fw-bold mb-0">MY PETS</h2>
-      <button class="btn btn-outline-dark btn-sm">+ ADD PET</button>
-    </div>
-    <div class="row g-3 mb-4">
-      <div class="col-6 col-md-3">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
-              <small class="text-muted">🐕</small>
-            </div>
-            <h5 class="h6 mb-1">Buddy</h5>
-            <p class="small text-muted mb-0">Labrador</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
-              <small class="text-muted">🐈</small>
-            </div>
-            <h5 class="h6 mb-1">Ming</h5>
-            <p class="small text-muted mb-0">Persian</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="card h-100 text-center">
-          <div class="card-body">
-            <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
-              <small class="text-muted">🐕</small>
-            </div>
-            <h5 class="h6 mb-1">Max</h5>
-            <p class="small text-muted mb-0">Shih Tzu</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="card h-100 text-center border-dashed">
-          <div class="card-body d-flex align-items-center justify-content-center">
-            <div>
-              <h3 class="h4 mb-1">+</h3>
-              <p class="small text-muted mb-0">Add Pet</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h2 class="h6 fw-bold mb-3">ANALYTICS</h2>
+    <h2 class="h6 fw-bold mb-3 mt-4">ANALYTICS</h2>
     <div class="row g-4">
       <div class="col-md-6">
         <div class="card">
@@ -177,5 +231,6 @@
   <script src="js/mock-data.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/main.js"></script>
+
 </body>
 </html>
