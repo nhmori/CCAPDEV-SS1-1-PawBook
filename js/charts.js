@@ -19,7 +19,7 @@ function drawCharts() {
 
   const has = id => document.getElementById(id);
 
-  ['popularServicesChart', 'ratingsChart', 'serviceBreakdownChart'].forEach(id => {
+  ['popularServicesChart', 'ratingsChart', 'serviceBreakdownChart', 'customerBookingsChart'].forEach(id => {
     const canvas = document.getElementById(id);
     if (canvas) {
       const existing = Chart.getChart(canvas);
@@ -27,6 +27,9 @@ function drawCharts() {
     }
   });
 
+  // SHOP DASHBOARD CHARTS
+
+  // chart 1: popular services
   if (has('popularServicesChart')) {
     new Chart(has('popularServicesChart'), {
       type: 'bar',
@@ -50,6 +53,7 @@ function drawCharts() {
     });
   }
 
+  // chart 2: average customer ratings
   if (has('ratingsChart')) {
     new Chart(has('ratingsChart'), {
       type: 'line',
@@ -79,6 +83,7 @@ function drawCharts() {
     });
   }
 
+  // chart 3: percentage of bookings
   if (has('serviceBreakdownChart')) {
     new Chart(has('serviceBreakdownChart'), {
       type: 'doughnut',
@@ -100,6 +105,33 @@ function drawCharts() {
       }
     });
   }
+
+  // CUSTOMER DASHBOARD CHART
+
+  // chart 4: my bookings per month
+  if (has('customerBookingsChart')) {
+    new Chart(has('customerBookingsChart'), {
+      type: 'bar',
+      data: {
+        labels: mockCustomerBookingsPerMonth.labels,
+        datasets: [{
+          label: 'Bookings',
+          data: mockCustomerBookingsPerMonth.data,
+          backgroundColor: accentColor,
+          borderRadius: 6
+        }]
+      },
+      options: {
+        ...sharedOptions,
+        plugins: {
+          ...sharedOptions.plugins,
+          legend: { display: false },
+          title: { display: true, text: 'My Bookings per Month', color: textColor }
+        }
+      }
+    });
+  }
+
 }
 
 document.addEventListener('DOMContentLoaded', drawCharts);

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawBook — My Dashboard</title>
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">PAWBOOK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="find-groomer.html">EXPLORE</a></li>
+          <li class="nav-item"><a class="nav-link" href="find-groomer.html">BUSINESSES</a></li>
+          <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
+          <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
+          <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container py-4">
+    <h1 class="h4 fw-bold mb-4">My Dashboard</h1>
+
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <p class="small text-muted mb-1">UPCOMING</p>
+            <h3 class="h4 fw-bold mb-0">2</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <p class="small text-muted mb-1">COMPLETED</p>
+            <h3 class="h4 fw-bold mb-0">12</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <p class="small text-muted mb-1">MY PETS</p>
+            <h3 class="h4 fw-bold mb-0">3</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <p class="small text-muted mb-1">REVIEWS</p>
+            <h3 class="h4 fw-bold mb-0">8</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h6 fw-bold mb-3">UPCOMING APPOINTMENTS</h2>
+    <div class="table-responsive mb-4">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th class="small text-muted">DATE</th>
+            <th class="small text-muted">BUSINESS</th>
+            <th class="small text-muted">SERVICE</th>
+            <th class="small text-muted text-end">STATUS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="small">Nov 15</td>
+            <td class="small">Happy Paws</td>
+            <td class="small">Full Groom</td>
+            <td class="text-end"><span class="badge bg-dark">Confirmed</span></td>
+          </tr>
+          <tr>
+            <td class="small">Nov 22</td>
+            <td class="small">Dogs & City</td>
+            <td class="small">Bath & Dry</td>
+            <td class="text-end"><span class="badge bg-secondary">Pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h6 fw-bold mb-0">MY PETS</h2>
+      <button class="btn btn-outline-dark btn-sm">+ ADD PET</button>
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="card h-100 text-center">
+          <div class="card-body">
+            <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+              <small class="text-muted">🐕</small>
+            </div>
+            <h5 class="h6 mb-1">Buddy</h5>
+            <p class="small text-muted mb-0">Labrador</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card h-100 text-center">
+          <div class="card-body">
+            <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+              <small class="text-muted">🐈</small>
+            </div>
+            <h5 class="h6 mb-1">Ming</h5>
+            <p class="small text-muted mb-0">Persian</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card h-100 text-center">
+          <div class="card-body">
+            <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+              <small class="text-muted">🐕</small>
+            </div>
+            <h5 class="h6 mb-1">Max</h5>
+            <p class="small text-muted mb-0">Shih Tzu</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card h-100 text-center border-dashed">
+          <div class="card-body d-flex align-items-center justify-content-center">
+            <div>
+              <h3 class="h4 mb-1">+</h3>
+              <p class="small text-muted mb-0">Add Pet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h6 fw-bold mb-3">ANALYTICS</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="customerBookingsChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-top py-4 mt-5">
+    <div class="container d-flex justify-content-between">
+      <div>
+        <a href="#" class="text-decoration-none me-3">About</a>
+        <a href="#" class="text-decoration-none me-3">Contact</a>
+        <a href="#" class="text-decoration-none me-3">Privacy</a>
+        <a href="#" class="text-decoration-none">Terms</a>
+      </div>
+      <span class="text-muted">&copy; 2026 PawBook</span>
+    </div>
+  </footer>
+
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="js/mock-data.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

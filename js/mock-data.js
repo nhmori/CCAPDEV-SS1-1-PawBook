@@ -25,3 +25,27 @@ const mockServiceBreakdown = {
   labels: ['Full Groom', 'Bath & Dry', 'Nail Trim', 'Teeth Cleaning', 'De-shedding'],
   data: [25, 40, 15, 10, 10]
 };
+
+// customer dashboard
+const mockCustomerStats = {
+  upcoming: 2,
+  completed: 12,
+  pets: 3,
+  reviews: 8
+};
+
+const mockCustomerBookings = [
+  { date: "Nov 15", business: "Happy Paws", service: "Full Groom", status: "Confirmed" },
+  { date: "Nov 22", business: "Dogs & City", service: "Bath & Dry", status: "Pending" }
+];
+
+const mockCustomerPets = [
+  { name: "Buddy", breed: "Labrador" },
+  { name: "Ming", breed: "Persian" },
+  { name: "Max", breed: "Shih Tzu" }
+];
+
+const mockCustomerBookingsPerMonth = {
+  labels: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+  data: [2, 3, 1, 4, 2, 3]
+};
