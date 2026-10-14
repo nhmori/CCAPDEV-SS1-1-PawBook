@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawBook — Book Appointment</title>
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">PAWBOOK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="find-groomer.html">EXPLORE</a></li>
+          <li class="nav-item"><a class="nav-link active" href="find-groomer.html">BUSINESSES</a></li>
+          <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
+          <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
+          <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-light border-bottom">
+    <div class="container py-4">
+      <a href="business-profile.html" id="backLink" class="text-decoration-none small">← Back to profile</a>
+      <h1 class="h4 fw-bold mb-1 mt-2">BOOK AN APPOINTMENT</h1>
+      <p class="text-muted small mb-0">Pick a service, choose a time, and confirm. It only takes a minute.</p>
+    </div>
+  </section>
+
+  <div class="container mt-3" id="alertRegion" aria-live="polite"></div>
+
+  <!-- Booking form -->
+  <form id="bookingForm" novalidate>
+    <div class="container py-4">
+      <div class="row g-4">
+
+        <div class="col-lg-8">
+
+          <!-- 1. Business & services -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h2 class="h6 fw-bold mb-3">1. CHOOSE SERVICES</h2>
+              <div class="mb-3">
+                <label class="form-label small" for="bizSelect">BUSINESS</label>
+                <select class="form-select" id="bizSelect"></select>
+              </div>
+              <label class="form-label small d-block">SERVICES (SELECT ONE OR MORE)</label>
+              <div id="serviceList" class="list-group"></div>
+            </div>
+          </div>
+
+          <!-- 2. Date & time -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h2 class="h6 fw-bold mb-3">2. PICK A DATE AND TIME</h2>
+              <div class="row g-3">
+                <div class="col-md-5">
+                  <label class="form-label small" for="apptDate">DATE *</label>
+                  <input type="date" class="form-control" id="apptDate" required>
+                  <div class="invalid-feedback">Choose a date.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label small d-block">AVAILABLE TIMES *</label>
+                  <div id="slotList" class="d-flex flex-wrap gap-2"></div>
+                  <p class="small text-muted mt-2 mb-0" id="slotHint">Choose a service and a date to see available times.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Pet -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h2 class="h6 fw-bold mb-3">3. SELECT YOUR PET</h2>
+              <div id="petList" class="row g-2 mb-3"></div>
+              <div id="newPetFields" class="row g-3 d-none">
+                <div class="col-md-4">
+                  <label class="form-label small" for="newPetName">PET NAME *</label>
+                  <input type="text" class="form-control" id="newPetName">
+                  <div class="invalid-feedback">Enter your pet's name.</div>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small" for="newPetType">TYPE</label>
+                  <select class="form-select" id="newPetType">
+                    <option>Dog</option>
+                    <option>Cat</option>
+                    <option>Small animal</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small" for="newPetBreed">BREED</label>
+                  <input type="text" class="form-control" id="newPetBreed">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Contact & notes -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h2 class="h6 fw-bold mb-3">4. YOUR DETAILS</h2>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label small" for="custName">FULL NAME *</label>
+                  <input type="text" class="form-control" id="custName" required value="Juan Dela Cruz">
+                  <div class="invalid-feedback">Enter your name.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small" for="custPhone">PHONE *</label>
+                  <input type="tel" class="form-control" id="custPhone" required placeholder="+63 900 000 0000">
+                  <div class="invalid-feedback">Enter a contact number.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label small" for="custEmail">EMAIL *</label>
+                  <input type="email" class="form-control" id="custEmail" required placeholder="you@example.com">
+                  <div class="invalid-feedback">Enter a valid email address.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label small" for="custNotes">NOTES FOR THE GROOMER</label>
+                  <textarea class="form-control" id="custNotes" rows="3" maxlength="300" placeholder="Allergies, behavior, coat condition, preferred cut..."></textarea>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="agree" required>
+                    <label class="form-check-label small" for="agree">I understand the booking and cancellation policy. *</label>
+                    <div class="invalid-feedback">Please accept the policy to continue.</div>
+                  </div>
+                  <p class="small text-muted mt-2 mb-0" id="policyText"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="col-lg-4">
+          <div class="position-sticky" style="top: 1rem;">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h2 class="h6 fw-bold mb-3">BOOKING SUMMARY</h2>
+                <h5 class="h6 mb-0" id="sumBiz"></h5>
+                <p class="small text-muted mb-3" id="sumLocation"></p>
+                <ul class="list-unstyled small mb-3">
+                  <li class="d-flex justify-content-between mb-1"><span class="text-muted">Date</span><span id="sumDate">—</span></li>
+                  <li class="d-flex justify-content-between mb-1"><span class="text-muted">Time</span><span id="sumTime">—</span></li>
+                  <li class="d-flex justify-content-between mb-1"><span class="text-muted">Pet</span><span id="sumPet">—</span></li>
+                  <li class="d-flex justify-content-between"><span class="text-muted">Duration</span><span id="sumDuration">—</span></li>
+                </ul>
+                <div class="border-top pt-3">
+                  <div class="small text-muted mb-1">SERVICES</div>
+                  <ul class="list-unstyled small mb-3" id="sumServices"><li class="text-muted">None selected</li></ul>
+                  <div class="d-flex justify-content-between fw-bold">
+                    <span>ESTIMATED TOTAL</span><span id="sumTotal">₱0</span>
+                  </div>
+                  <p class="small text-muted mt-1 mb-0">Pay at the shop. Final price may vary by pet size and coat.</p>
+                </div>
+              </div>
+            </div>
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-dark" id="confirmBtn">CONFIRM BOOKING</button>
+              <a href="business-profile.html" class="btn btn-outline-dark" id="cancelLink">CANCEL</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+  <!-- Confirmation -->
+  <div class="container py-5 d-none" id="confirmation">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card text-center">
+          <div class="card-body p-4">
+            <div class="bg-light rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+              <span class="h4 mb-0">✓</span>
+            </div>
+            <h2 class="h5 fw-bold mb-1">BOOKING REQUEST SENT</h2>
+            <p class="text-muted small mb-3">The shop will confirm your appointment shortly.</p>
+            <p class="small mb-3">Reference: <span class="fw-bold" id="confRef"></span></p>
+            <ul class="list-unstyled small text-start border rounded p-3 mb-4">
+              <li class="d-flex justify-content-between mb-1"><span class="text-muted">Business</span><span id="confBiz"></span></li>
+              <li class="d-flex justify-content-between mb-1"><span class="text-muted">Date</span><span id="confDate"></span></li>
+              <li class="d-flex justify-content-between mb-1"><span class="text-muted">Time</span><span id="confTime"></span></li>
+              <li class="d-flex justify-content-between mb-1"><span class="text-muted">Pet</span><span id="confPet"></span></li>
+              <li class="d-flex justify-content-between mb-1"><span class="text-muted">Services</span><span id="confServices" class="text-end"></span></li>
+              <li class="d-flex justify-content-between"><span class="text-muted">Estimated total</span><span id="confTotal" class="fw-bold"></span></li>
+            </ul>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+              <a href="my-dashboard.html" class="btn btn-dark btn-sm">VIEW MY APPOINTMENTS</a>
+              <a href="index.html" class="btn btn-outline-dark btn-sm">BACK TO HOME</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-top py-4 mt-5">
+    <div class="container d-flex justify-content-between">
+      <div>
+        <a href="#" class="text-decoration-none me-3">About</a>
+        <a href="#" class="text-decoration-none me-3">Contact</a>
+        <a href="#" class="text-decoration-none me-3">Privacy</a>
+        <a href="#" class="text-decoration-none">Terms</a>
+      </div>
+      <span class="text-muted">&copy; 2026 PawBook</span>
+    </div>
+  </footer>
+
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/mock-data.js"></script>
+  <script src="js/businesses-data.js"></script>
+  <script>
+    $(function () {
+      var OWNER_ID = 1;
+      var PROFILE_KEY = 'pawbook_business_profile';
+      var BOOKINGS_KEY = 'pawbook_bookings';
+      var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      var SLOT_STEP = 30; // minutes
+
+      // Keep the back/cancel links pointing at the right profile even if data fails to load
+      var _id = parseInt(new URLSearchParams(window.location.search).get('id'), 10);
+      if (_id) $('#backLink, #cancelLink').attr('href', 'business-profile.html?id=' + _id);
+
+      if (typeof mockBusinesses === 'undefined') {
+        $('#bookingForm').addClass('d-none');
+        $('#alertRegion').html('<div class="alert alert-secondary small">Business data could not be loaded. Check that js/businesses-data.js is included.</div>');
+        return;
+      }
+
+      var pets = (typeof mockCustomerPets !== 'undefined') ? mockCustomerPets : [
+        { name: 'Buddy', breed: 'Labrador' }, { name: 'Ming', breed: 'Persian' }, { name: 'Max', breed: 'Shih Tzu' }
+      ];
+
+      var params = new URLSearchParams(window.location.search);
+      var bizId = parseInt(params.get('id'), 10) || 1;
+      var biz = null, data = null;
+
+      /* ---------- helpers ---------- */
+      function money(n) { return '₱' + Number(n).toLocaleString(); }
+      function priceOf(s) { return Number(String(s.price).replace(/,/g, '')) || 0; }
+      function toMin(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
+      function to12h(min) {
+        var h = Math.floor(min / 60), m = min % 60, ap = h >= 12 ? 'PM' : 'AM';
+        return ((h % 12) || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
+      }
+      function parseDate(v) { var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+      function fmtDate(v) {
+        return parseDate(v).toLocaleDateString('en-PH', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+      }
+      function isoDate(d) {
+        var m = d.getMonth() + 1, day = d.getDate();
+        return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
+      }
+      function hash(str) { var h = 0; for (var i = 0; i < str.length; i++) { h = (h * 31 + str.charCodeAt(i)) >>> 0; } return h; }
+      function showAlert(type, msg) {
+        var $a = $('<div class="alert alert-' + type + ' small alert-dismissible mb-0" role="alert"></div>').text(msg)
+          .append('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>');
+        $('#alertRegion').empty().append($a);
+      }
+
+      /* ---------- business data ---------- */
+      function loadBusiness(id) {
+        biz = mockBusinesses.filter(function (b) { return b.id === id; })[0] || mockBusinesses[0];
+        bizId = biz.id;
+        data = { fields: biz.fields, services: biz.services, hours: biz.hours };
+        if (biz.id === OWNER_ID) {
+          try {
+            var saved = JSON.parse(localStorage.getItem(PROFILE_KEY));
+            if (saved && saved.fields && saved.fields.bizName) data = saved;
+          } catch (e) {}
+        }
+        $('#bizSelect').val(bizId);
+        $('#backLink, #cancelLink').attr('href', 'business-profile.html?id=' + bizId);
+        $('#sumBiz').text(data.fields.bizName);
+        $('#sumLocation').text([data.fields.bizAddress, data.fields.bizCity].filter(Boolean).join(', '));
+        $('#policyText').text(data.fields.bizPolicy || '');
+        buildServices(); buildSlots(); updateSummary();
+      }
+
+      mockBusinesses.forEach(function (b) {
+        $('#bizSelect').append($('<option></option>').val(b.id).text(b.fields.bizName + ' — ' + b.fields.bizCity));
+      });
+      $('#bizSelect').on('change', function () { loadBusiness(parseInt($(this).val(), 10)); });
+
+      /* ---------- services ---------- */
+      function buildServices() {
+        var $l = $('#serviceList').empty();
+        var preselect = (params.get('service') || '').toLowerCase();
+        (data.services || []).forEach(function (s, i) {
+          var id = 'svc' + i;
+          var $row = $('<label class="list-group-item d-flex align-items-center gap-3" style="cursor:pointer;"></label>').attr('for', id);
+          $row.append($('<input class="form-check-input flex-shrink-0 svc-check" type="checkbox">').attr('id', id).val(i)
+            .prop('checked', preselect && s.name.toLowerCase() === preselect));
+          $row.append($('<div class="flex-grow-1"></div>')
+            .append($('<div class="small fw-bold"></div>').text(s.name))
+            .append($('<div class="small text-muted"></div>').text((s.time || '—') + ' min')));
+          $row.append($('<div class="small fw-bold"></div>').text(money(priceOf(s))));
+          $l.append($row);
+        });
+      }
+      function selectedServices() {
+        return $('.svc-check:checked').map(function () { return data.services[+this.value]; }).get();
+      }
+      $('#serviceList').on('change', '.svc-check', function () { buildSlots(); updateSummary(); });
+
+      /* ---------- date + time slots ---------- */
+      var today = new Date();
+      $('#apptDate').attr('min', isoDate(today));
+      var maxD = new Date(today); maxD.setDate(maxD.getDate() + 60);
+      $('#apptDate').attr('max', isoDate(maxD));
+      $('#apptDate').on('change', function () { buildSlots(); updateSummary(); });
+
+      function totalDuration() {
+        return selectedServices().reduce(function (t, s) { return t + (Number(s.time) || 60); }, 0);
+      }
+
+      function buildSlots() {
+        var $s = $('#slotList').empty();
+        var date = $('#apptDate').val(), dur = totalDuration();
+        var $hint = $('#slotHint');
+        if (!dur) { $hint.text('Choose at least one service to see available times.'); return; }
+        if (!date) { $hint.text('Choose a date to see available times.'); return; }
+
+        var d = parseDate(date);
+        var h = (data.hours || {})[DAYS[(d.getDay() + 6) % 7]];
+        if (!h || h.closed) { $hint.text(data.fields.bizName + ' is closed on this day. Try another date.'); return; }
+
+        var open = toMin(h.open), close = toMin(h.close);
+        var nowMin = (date === isoDate(today)) ? today.getHours() * 60 + today.getMinutes() + 30 : -1;
+        var count = 0;
+        for (var t = open; t + dur <= close; t += SLOT_STEP) {
+          var id = 'slot' + t;
+          var taken = (hash(bizId + date + t) % 5 === 0) || t < nowMin; // simulated availability
+          var $in = $('<input type="radio" class="btn-check" name="slot" autocomplete="off">').attr('id', id).val(t).prop('disabled', taken);
+          var $lb = $('<label class="btn btn-outline-dark btn-sm"></label>').attr('for', id).text(to12h(t));
+          $s.append($in, $lb);
+          if (!taken) count++;
+        }
+        $hint.text(count ? count + ' times available. Your visit takes about ' + dur + ' minutes.' : 'No times left on this day. Try another date.');
+      }
+      $('#slotList').on('change', 'input[name=slot]', updateSummary);
+
+      /* ---------- pets ---------- */
+      function buildPets() {
+        var $p = $('#petList').empty();
+        pets.forEach(function (p, i) {
+          var id = 'pet' + i;
+          var $col = $('<div class="col-6 col-md-4"></div>');
+          $col.append($('<input type="radio" class="btn-check" name="pet" autocomplete="off">').attr('id', id).val(i));
+          $col.append($('<label class="btn btn-outline-dark w-100 text-start"></label>').attr('for', id)
+            .append($('<div class="small fw-bold"></div>').text(p.name))
+            .append($('<div class="small opacity-75"></div>').text(p.breed || '')));
+          $p.append($col);
+        });
+        var $new = $('<div class="col-6 col-md-4"></div>');
+        $new.append('<input type="radio" class="btn-check" name="pet" id="petNew" value="new" autocomplete="off">');
+        $new.append('<label class="btn btn-outline-dark w-100 text-start" for="petNew"><div class="small fw-bold">+ Add new pet</div><div class="small opacity-75">Enter details</div></label>');
+        $p.append($new);
+      }
+      $('#petList').on('change', 'input[name=pet]', function () {
+        $('#newPetFields').toggleClass('d-none', $('input[name=pet]:checked').val() !== 'new');
+        updateSummary();
+      });
+      $('#newPetName').on('input', updateSummary);
+
+      function selectedPetName() {
+        var v = $('input[name=pet]:checked').val();
+        if (v === undefined) return '';
+        if (v === 'new') return $('#newPetName').val().trim();
+        return pets[+v].name;
+      }
+
+      /* ---------- summary ---------- */
+      function updateSummary() {
+        var sv = selectedServices(), dur = totalDuration();
+        var $l = $('#sumServices').empty();
+        if (!sv.length) $l.append('<li class="text-muted">None selected</li>');
+        var total = 0;
+        sv.forEach(function (s) {
+          total += priceOf(s);
+          $l.append($('<li class="d-flex justify-content-between mb-1"></li>')
+            .append($('<span></span>').text(s.name)).append($('<span></span>').text(money(priceOf(s)))));
+        });
+        $('#sumTotal').text(money(total));
+        $('#sumDuration').text(dur ? dur + ' min' : '—');
+        var date = $('#apptDate').val();
+        $('#sumDate').text(date ? fmtDate(date) : '—');
+        var slot = $('input[name=slot]:checked').val();
+        $('#sumTime').text(slot !== undefined ? to12h(+slot) : '—');
+        $('#sumPet').text(selectedPetName() || '—');
+      }
+
+      /* ---------- submit ---------- */
+      $('#bookingForm').on('submit', function (e) {
+        e.preventDefault();
+        var form = this, errors = [];
+        $(form).addClass('was-validated');
+        if (!selectedServices().length) errors.push('Select at least one service.');
+        if (!$('#apptDate').val()) errors.push('Choose a date.');
+        else if ($('input[name=slot]:checked').val() === undefined) errors.push('Pick an available time.');
+        if ($('input[name=pet]:checked').val() === undefined) errors.push('Select your pet.');
+        $('#newPetName').prop('required', $('input[name=pet]:checked').val() === 'new');
+        if (errors.length || !form.checkValidity()) {
+          showAlert('danger', errors.length ? errors.join(' ') : 'Some required fields are missing or invalid. Check the highlighted fields and try again.');
+          $('html, body').animate({ scrollTop: 0 }, 200);
+          return;
+        }
+
+        // Simulated booking (no backend in Phase 1)
+        var $btn = $('#confirmBtn').prop('disabled', true).text('SENDING...');
+        setTimeout(function () {
+          var sv = selectedServices(), total = sv.reduce(function (t, s) { return t + priceOf(s); }, 0);
+          var ref = 'PB-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+          var slot = +$('input[name=slot]:checked').val();
+          var booking = {
+            ref: ref, businessId: bizId, business: data.fields.bizName,
+            date: $('#apptDate').val(), time: to12h(slot), pet: selectedPetName(),
+            services: sv.map(function (s) { return s.name; }), total: total, status: 'Pending',
+            customer: { name: $('#custName').val().trim(), phone: $('#custPhone').val().trim(), email: $('#custEmail').val().trim() },
+            notes: $('#custNotes').val().trim()
+          };
+          try {
+            var all = JSON.parse(localStorage.getItem(BOOKINGS_KEY)) || [];
+            all.push(booking);
+            localStorage.setItem(BOOKINGS_KEY, JSON.stringify(all));
+          } catch (err) {}
+
+          $('#confRef').text(ref);
+          $('#confBiz').text(booking.business);
+          $('#confDate').text(fmtDate(booking.date));
+          $('#confTime').text(booking.time);
+          $('#confPet').text(booking.pet);
+          $('#confServices').text(booking.services.join(', '));
+          $('#confTotal').text(money(total));
+          $('#bookingForm, #alertRegion').addClass('d-none');
+          $('#confirmation').removeClass('d-none');
+          $('html, body').animate({ scrollTop: 0 }, 200);
+        }, 800);
+      });
+
+      /* ---------- init ---------- */
+      buildPets();
+      loadBusiness(bizId);
+    });
+  </script>
+
+</body>
+</html>
