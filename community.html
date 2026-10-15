@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawBook — Community</title>
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">PAWBOOK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="find-groomer.html">BUSINESSES</a></li>
+          <li class="nav-item"><a class="nav-link active" href="community.html">COMMUNITY</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
+          <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
+          <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<section class="bg-light border-bottom">
+  <div class="container py-4">
+    <h1 class="h3 fw-bold mb-1">COMMUNITY</h1>
+    <p class="text-muted small mb-0">Share updates, tips and service recommendations with other pet parents.</p>
+  </div>
+</section>
+
+<section class="container py-4">
+  <div class="row g-4">
+
+    <div class="col-lg-8">
+
+      <div class="row g-2 mb-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control form-control-sm" placeholder="Search posts, tags, members...">
+        </div>
+        <div class="col-6 col-md-3">
+          <select class="form-select form-select-sm">
+            <option>All posts</option>
+            <option>Customers</option>
+            <option>Businesses</option>
+          </select>
+        </div>
+        <div class="col-6 col-md-3">
+          <select class="form-select form-select-sm">
+            <option>Most recent</option>
+            <option>Most liked</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <form>
+            <textarea class="form-control mb-2" rows="3" placeholder="What's on your mind?"></textarea>
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-outline-dark btn-sm">+ PHOTO</button>
+              <button type="button" class="btn btn-dark btn-sm">POST</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <div class="bg-secondary rounded-circle me-2" style="width:32px;height:32px;"></div>
+            <div>
+              <small class="fw-bold d-block">Sarah Jenkins</small>
+              <small class="text-muted">2 hrs ago</small>
+            </div>
+            <span class="badge bg-light text-dark border ms-auto">Customer</span>
+          </div>
+          <p class="small">Took Milo to The Dog Barber for a full summer de-shedding and bath today! Look how fluffy his coat turned out.</p>
+          <div class="bg-light d-flex align-items-center justify-content-center border rounded mb-3" style="height:200px;">
+            <small class="text-muted">[Image]</small>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-dark btn-sm">♥ 42</button>
+            <button class="btn btn-outline-dark btn-sm">💬 14</button>
+            <button class="btn btn-outline-dark btn-sm">SHARE</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <div class="bg-secondary rounded-circle me-2" style="width:32px;height:32px;"></div>
+            <div>
+              <small class="fw-bold d-block">Happy Paws</small>
+              <small class="text-muted">5 hrs ago</small>
+            </div>
+            <span class="badge bg-dark ms-auto">Business</span>
+          </div>
+          <p class="small">New service available: Pet pool sessions! Book a slot this week.</p>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-dark btn-sm">♥ 18</button>
+            <button class="btn btn-outline-dark btn-sm">💬 3</button>
+            <button class="btn btn-outline-dark btn-sm">SHARE</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <div class="bg-secondary rounded-circle me-2" style="width:32px;height:32px;"></div>
+            <div>
+              <small class="fw-bold d-block">Juan Dela Cruz</small>
+              <small class="text-muted">Yesterday</small>
+            </div>
+            <span class="badge bg-light text-dark border ms-auto">Customer</span>
+          </div>
+          <p class="small">Buddy loved his fresh cut !!!</p>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-dark btn-sm">♥ 27</button>
+            <button class="btn btn-outline-dark btn-sm">💬 6</button>
+            <button class="btn btn-outline-dark btn-sm">SHARE</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h2 class="h6 fw-bold mb-3">COMMUNITY GUIDELINES</h2>
+          <p class="small mb-2">1. Be kind and respectful. Keep conversations pet-centric.</p>
+          <p class="small mb-2">2. Reviews must link to confirmed bookings.</p>
+          <p class="small mb-0">3. No unauthorized sales or unlicensed vet advice.</p>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h2 class="h6 fw-bold mb-3">TRENDING TOPICS</h2>
+          <p class="small mb-2"><b>#dogs</b><br><span class="text-muted">1,248 posts today</span></p>
+          <p class="small mb-2"><b>#grooming</b><br><span class="text-muted">812 posts today</span></p>
+          <p class="small mb-2"><b>#cats</b><br><span class="text-muted">654 posts today</span></p>
+          <p class="small mb-0"><b>#vetcare</b><br><span class="text-muted">419 posts today</span></p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+  <footer class="border-top py-4 mt-5">
+    <div class="container d-flex justify-content-between">
+      <div>
+        <a href="#" class="text-decoration-none me-3">About</a>
+        <a href="#" class="text-decoration-none me-3">Contact</a>
+        <a href="#" class="text-decoration-none me-3">Privacy</a>
+        <a href="#" class="text-decoration-none">Terms</a>
+      </div>
+      <span class="text-muted">&copy; 2026 PawBook</span>
+    </div>
+  </footer>
+
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

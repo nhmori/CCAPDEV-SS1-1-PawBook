@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawBook — Log In / Sign Up</title>
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">PAWBOOK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="find-groomer.html">BUSINESSES</a></li>
+          <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
+          <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
+          <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<section class="container py-5">
+  <div class="row justify-content-center">
+
+    <div class="col-lg-5 d-none d-lg-block pe-5">
+      <h1 class="h3 fw-bold">THE ALL-IN-ONE PLATFORM FOR PET GROOMING & CARE</h1>
+      <p class="text-muted">Book appointments with top-rated groomers, manage your pet's details, and connect with a local pet-loving community.</p>
+    </div>
+
+    <div class="col-lg-5 col-md-8">
+      <div class="card">
+        <div class="card-body p-4">
+
+          <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#login" type="button">Log in</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#signup" type="button">Sign up</button>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+
+            <div class="tab-pane fade show active" id="login">
+              <form action="my-dashboard.html">
+                <label class="form-label small">EMAIL</label>
+                <input type="email" class="form-control mb-3" placeholder="you@example.com" required>
+
+                <label class="form-label small">PASSWORD</label>
+                <input type="password" class="form-control mb-3" placeholder="Password" required>
+
+                <a href="#" class="small text-decoration-none">Forgot password?</a>
+
+                <button type="submit" class="btn btn-dark w-100 mt-3">LOG IN</button>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="signup">
+              <form action="login-signup.html">
+                <label class="form-label small">I AM A</label>
+                <select class="form-select mb-3">
+                  <option>Pet owner</option>
+                  <option>Grooming business</option>
+                </select>
+
+                <label class="form-label small">NAME</label>
+                <input type="text" class="form-control mb-3" placeholder="Full name or business name" required>
+
+                <label class="form-label small">EMAIL</label>
+                <input type="email" class="form-control mb-3" placeholder="you@example.com" required>
+
+                <label class="form-label small">PASSWORD</label>
+                <input type="password" class="form-control mb-3" placeholder="Min. 8 characters" minlength="8" required>
+
+                <label class="form-label small">CONFIRM PASSWORD</label>
+                <input type="password" class="form-control mb-3" placeholder="Re-enter password" required>
+
+                <button type="submit" class="btn btn-dark w-100 mt-2">CREATE ACCOUNT</button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <footer class="border-top py-4 mt-5">
+    <div class="container d-flex justify-content-between">
+      <div>
+        <a href="#" class="text-decoration-none me-3">About</a>
+        <a href="#" class="text-decoration-none me-3">Contact</a>
+        <a href="#" class="text-decoration-none me-3">Privacy</a>
+        <a href="#" class="text-decoration-none">Terms</a>
+      </div>
+      <span class="text-muted">&copy; 2026 PawBook</span>
+    </div>
+  </footer>
+
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

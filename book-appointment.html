@@ -18,7 +18,6 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
-          <li class="nav-item"><a class="nav-link" href="find-groomer.html">EXPLORE</a></li>
           <li class="nav-item"><a class="nav-link active" href="find-groomer.html">BUSINESSES</a></li>
           <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
         </ul>
@@ -41,14 +40,12 @@
 
   <div class="container mt-3" id="alertRegion" aria-live="polite"></div>
 
-  <!-- Booking form -->
   <form id="bookingForm" novalidate>
     <div class="container py-4">
       <div class="row g-4">
 
         <div class="col-lg-8">
 
-          <!-- 1. Business & services -->
           <div class="card mb-4">
             <div class="card-body">
               <h2 class="h6 fw-bold mb-3">1. CHOOSE SERVICES</h2>
@@ -61,7 +58,6 @@
             </div>
           </div>
 
-          <!-- 2. Date & time -->
           <div class="card mb-4">
             <div class="card-body">
               <h2 class="h6 fw-bold mb-3">2. PICK A DATE AND TIME</h2>
@@ -80,7 +76,6 @@
             </div>
           </div>
 
-          <!-- 3. Pet -->
           <div class="card mb-4">
             <div class="card-body">
               <h2 class="h6 fw-bold mb-3">3. SELECT YOUR PET</h2>
@@ -107,7 +102,6 @@
             </div>
           </div>
 
-          <!-- 4. Contact & notes -->
           <div class="card mb-4">
             <div class="card-body">
               <h2 class="h6 fw-bold mb-3">4. YOUR DETAILS</h2>
@@ -144,7 +138,6 @@
           </div>
         </div>
 
-        <!-- Summary -->
         <div class="col-lg-4">
           <div class="position-sticky" style="top: 1rem;">
             <div class="card mb-4">
@@ -179,7 +172,6 @@
     </div>
   </form>
 
-  <!-- Confirmation -->
   <div class="container py-5 d-none" id="confirmation">
     <div class="row justify-content-center">
       <div class="col-lg-6">
@@ -234,7 +226,6 @@
       var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
       var SLOT_STEP = 30; // minutes
 
-      // Keep the back/cancel links pointing at the right profile even if data fails to load
       var _id = parseInt(new URLSearchParams(window.location.search).get('id'), 10);
       if (_id) $('#backLink, #cancelLink').attr('href', 'business-profile.html?id=' + _id);
 
@@ -252,7 +243,6 @@
       var bizId = parseInt(params.get('id'), 10) || 1;
       var biz = null, data = null;
 
-      /* ---------- helpers ---------- */
       function money(n) { return '₱' + Number(n).toLocaleString(); }
       function priceOf(s) { return Number(String(s.price).replace(/,/g, '')) || 0; }
       function toMin(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
@@ -275,7 +265,6 @@
         $('#alertRegion').empty().append($a);
       }
 
-      /* ---------- business data ---------- */
       function loadBusiness(id) {
         biz = mockBusinesses.filter(function (b) { return b.id === id; })[0] || mockBusinesses[0];
         bizId = biz.id;
@@ -299,7 +288,6 @@
       });
       $('#bizSelect').on('change', function () { loadBusiness(parseInt($(this).val(), 10)); });
 
-      /* ---------- services ---------- */
       function buildServices() {
         var $l = $('#serviceList').empty();
         var preselect = (params.get('service') || '').toLowerCase();
@@ -320,7 +308,6 @@
       }
       $('#serviceList').on('change', '.svc-check', function () { buildSlots(); updateSummary(); });
 
-      /* ---------- date + time slots ---------- */
       var today = new Date();
       $('#apptDate').attr('min', isoDate(today));
       var maxD = new Date(today); maxD.setDate(maxD.getDate() + 60);
@@ -357,7 +344,6 @@
       }
       $('#slotList').on('change', 'input[name=slot]', updateSummary);
 
-      /* ---------- pets ---------- */
       function buildPets() {
         var $p = $('#petList').empty();
         pets.forEach(function (p, i) {
@@ -387,7 +373,6 @@
         return pets[+v].name;
       }
 
-      /* ---------- summary ---------- */
       function updateSummary() {
         var sv = selectedServices(), dur = totalDuration();
         var $l = $('#sumServices').empty();
@@ -407,7 +392,6 @@
         $('#sumPet').text(selectedPetName() || '—');
       }
 
-      /* ---------- submit ---------- */
       $('#bookingForm').on('submit', function (e) {
         e.preventDefault();
         var form = this, errors = [];
@@ -423,7 +407,6 @@
           return;
         }
 
-        // Simulated booking (no backend in Phase 1)
         var $btn = $('#confirmBtn').prop('disabled', true).text('SENDING...');
         setTimeout(function () {
           var sv = selectedServices(), total = sv.reduce(function (t, s) { return t + priceOf(s); }, 0);
@@ -455,7 +438,6 @@
         }, 800);
       });
 
-      /* ---------- init ---------- */
       buildPets();
       loadBusiness(bizId);
     });
