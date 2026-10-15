@@ -1,4 +1,4 @@
-// shop dashboard
+
 const mockShopStats = {
   pending: 5,
   today: 8,
@@ -26,7 +26,7 @@ const mockServiceBreakdown = {
   data: [25, 40, 15, 10, 10]
 };
 
-// customer dashboard
+
 const mockCustomerStats = {
   upcoming: 2,
   completed: 12,
@@ -35,14 +35,14 @@ const mockCustomerStats = {
 };
 
 const mockCustomerBookings = [
-  { date: "Nov 15", business: "Happy Paws", service: "Full Groom", status: "Confirmed" },
-  { date: "Nov 22", business: "Dogs & City", service: "Bath & Dry", status: "Pending" }
+  { date: "Nov 15", business: "Pawfect Grooming Spa", service: "Full Grooming", status: "Confirmed" },
+  { date: "Nov 22", business: "Furry Tails Studio", service: "Spa Bath", status: "Pending" }
 ];
 
 const mockCustomerPets = [
-  { name: "Buddy", breed: "Labrador" },
-  { name: "Ming", breed: "Persian" },
-  { name: "Max", breed: "Shih Tzu" }
+  { name: "Dalla", breed: "Mixed breed" },
+  { name: "Kiwi", breed: "Mixed breed" },
+  { name: "Charlie", breed: "Mixed breed" }
 ];
 
 const mockCustomerBookingsPerMonth = {
@@ -50,7 +50,7 @@ const mockCustomerBookingsPerMonth = {
   data: [2, 3, 1, 4, 2, 3]
 };
 
-// admin dashboard
+
 const mockAdminStats = {
   users: 1240,
   shops: 85,

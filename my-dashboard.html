@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PawBook — My Dashboard</title>
+  <title>PawBook — Bookings</title>
   <link rel="stylesheet" href="lib/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -32,14 +32,18 @@
   </nav>
 
   <section class="container py-4">
-    <h1 class="h4 fw-bold mb-4">My Dashboard</h1>
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item"><a class="nav-link active" href="my-dashboard.html">Bookings</a></li>
+      <li class="nav-item"><a class="nav-link" href="my-pets.html">Pets</a></li>
+      <li class="nav-item"><a class="nav-link" href="my-pets.html#account">Account</a></li>
+    </ul>
 
     <div class="row g-3 mb-4">
       <div class="col-6 col-md-3">
         <div class="card h-100">
           <div class="card-body">
             <p class="small text-muted mb-1">UPCOMING</p>
-            <h3 class="h4 fw-bold mb-0">2</h3>
+            <h3 class="h4 fw-bold mb-0" id="statUpcoming">2</h3>
           </div>
         </div>
       </div>
@@ -47,7 +51,7 @@
         <div class="card h-100">
           <div class="card-body">
             <p class="small text-muted mb-1">COMPLETED</p>
-            <h3 class="h4 fw-bold mb-0">12</h3>
+            <h3 class="h4 fw-bold mb-0" id="statCompleted">0</h3>
           </div>
         </div>
       </div>
@@ -55,7 +59,7 @@
         <div class="card h-100">
           <div class="card-body">
             <p class="small text-muted mb-1">MY PETS</p>
-            <h3 class="h4 fw-bold mb-0">3</h3>
+            <h3 class="h4 fw-bold mb-0" id="statPets">3</h3>
           </div>
         </div>
       </div>
@@ -74,144 +78,142 @@
         <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#appointments-pane" type="button">Appointments</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pets-pane" type="button">My Pets</button>
-      </li>
-      <li class="nav-item" role="presentation">
         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#history-pane" type="button">History</button>
       </li>
     </ul>
 
     <div class="tab-content">
       <div class="tab-pane fade show active" id="appointments-pane" role="tabpanel">
-        <h2 class="h6 fw-bold mb-3">UPCOMING APPOINTMENTS</h2>
+        <div id="apptAlert"></div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h6 fw-bold mb-0">UPCOMING APPOINTMENTS</h2>
+          <a href="find-groomer.html" class="btn btn-outline-dark btn-sm">+ BOOK APPOINTMENT</a>
+        </div>
         <div class="table-responsive mb-4">
           <table class="table align-middle">
             <thead>
               <tr>
-                <th class="small text-muted">DATE</th>
+                <th class="small text-muted">DATE &amp; TIME</th>
                 <th class="small text-muted">BUSINESS</th>
-                <th class="small text-muted">SERVICE</th>
-                <th class="small text-muted text-end">STATUS</th>
+                <th class="small text-muted">SERVICES</th>
+                <th class="small text-muted">PET</th>
+                <th class="small text-muted">TOTAL</th>
+                <th class="small text-muted">STATUS</th>
+                <th class="small text-muted text-end">ACTIONS</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="small">Nov 15</td>
-                <td class="small">Happy Paws</td>
-                <td class="small">Full Groom</td>
-                <td class="text-end"><span class="badge bg-dark">Confirmed</span></td>
-              </tr>
-              <tr>
-                <td class="small">Nov 22</td>
-                <td class="small">Dogs & City</td>
-                <td class="small">Bath & Dry</td>
-                <td class="text-end"><span class="badge bg-secondary">Pending</span></td>
-              </tr>
-            </tbody>
+            <tbody id="upcomingBody"></tbody>
           </table>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="pets-pane" role="tabpanel">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h2 class="h6 fw-bold mb-0">MY PETS</h2>
-          <button class="btn btn-outline-dark btn-sm">+ ADD PET</button>
-        </div>
-        <div class="row g-3 mb-4">
-          <div class="col-6 col-md-3">
-            <div class="card h-100 text-center">
-              <div class="card-body">
-                <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                  <small class="text-muted">🐕</small>
-                </div>
-                <h5 class="h6 mb-1">Buddy</h5>
-                <p class="small text-muted mb-0">Labrador</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-md-3">
-            <div class="card h-100 text-center">
-              <div class="card-body">
-                <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                  <small class="text-muted">🐈</small>
-                </div>
-                <h5 class="h6 mb-1">Ming</h5>
-                <p class="small text-muted mb-0">Persian</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-md-3">
-            <div class="card h-100 text-center">
-              <div class="card-body">
-                <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                  <small class="text-muted">🐕</small>
-                </div>
-                <h5 class="h6 mb-1">Max</h5>
-                <p class="small text-muted mb-0">Shih Tzu</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-md-3">
-            <div class="card h-100 text-center">
-              <div class="card-body d-flex align-items-center justify-content-center">
-                <div>
-                  <h3 class="h4 mb-1">+</h3>
-                  <p class="small text-muted mb-0">Add Pet</p>
-                </div>
-              </div>
-            </div>
+          <div class="text-center py-4 d-none" id="upcomingEmpty">
+            <p class="mb-1 fw-bold">No upcoming appointments</p>
+            <p class="small text-muted mb-3">Find a groomer and book a time for your pet.</p>
+            <a href="find-groomer.html" class="btn btn-dark btn-sm">FIND A GROOMER</a>
           </div>
         </div>
       </div>
 
       <div class="tab-pane fade" id="history-pane" role="tabpanel">
-        <h2 class="h6 fw-bold mb-3">PAST BOOKINGS</h2>
+        <h2 class="h6 fw-bold mb-3">PAST APPOINTMENTS</h2>
         <div class="table-responsive mb-4">
           <table class="table align-middle">
             <thead>
               <tr>
-                <th class="small text-muted">DATE</th>
+                <th class="small text-muted">DATE &amp; TIME</th>
                 <th class="small text-muted">BUSINESS</th>
-                <th class="small text-muted">SERVICE</th>
-                <th class="small text-muted text-end">STATUS</th>
+                <th class="small text-muted">SERVICES</th>
+                <th class="small text-muted">PET</th>
+                <th class="small text-muted">TOTAL</th>
+                <th class="small text-muted">STATUS</th>
+                <th class="small text-muted text-end">ACTIONS</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="small">Oct 12</td>
-                <td class="small">Happy Paws</td>
-                <td class="small">Full Groom</td>
-                <td class="text-end"><span class="badge bg-dark">Completed</span></td>
-              </tr>
-              <tr>
-                <td class="small">Sep 28</td>
-                <td class="small">The Dog Barber</td>
-                <td class="small">De-shedding</td>
-                <td class="text-end"><span class="badge bg-dark">Completed</span></td>
-              </tr>
-              <tr>
-                <td class="small">Sep 10</td>
-                <td class="small">Dogs & City</td>
-                <td class="small">Bath & Dry</td>
-                <td class="text-end"><span class="badge bg-dark">Completed</span></td>
-              </tr>
-            </tbody>
+            <tbody id="historyBody"></tbody>
           </table>
-        </div>
-      </div>
-    </div>
-
-    <h2 class="h6 fw-bold mb-3 mt-4">ANALYTICS</h2>
-    <div class="row g-4">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <canvas id="customerBookingsChart"></canvas>
+          <div class="text-center py-4 d-none" id="historyEmpty">
+            <p class="mb-0 small text-muted">No past appointments yet.</p>
           </div>
         </div>
       </div>
     </div>
+
   </section>
+
+  <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="modifyTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <form class="modal-content" id="modifyForm" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title h5 fw-bold" id="modifyTitle">Modify appointment</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger small d-none" id="mError" role="alert"></div>
+
+          <div class="mb-3">
+            <div class="small text-muted">BOOKING AT</div>
+            <div class="fw-bold" id="mBiz"></div>
+            <div class="small text-muted" id="mPlace"></div>
+          </div>
+
+          <label class="form-label small d-block">SERVICES (SELECT ONE OR MORE)</label>
+          <div id="mServices" class="list-group mb-4"></div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-5">
+              <label class="form-label small" for="mDate">DATE</label>
+              <input type="date" class="form-control" id="mDate" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label small d-block">AVAILABLE TIMES</label>
+              <div id="mSlots" class="d-flex flex-wrap gap-2"></div>
+              <p class="small text-muted mt-2 mb-0" id="mSlotHint"></p>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small" for="mPet">PET</label>
+              <select class="form-select" id="mPet" required></select>
+            </div>
+            <div class="col-12">
+              <label class="form-label small" for="mNotes">NOTES FOR THE GROOMER</label>
+              <textarea class="form-control" id="mNotes" rows="3" maxlength="300" placeholder="Allergies, behavior, coat condition, preferred cut..."></textarea>
+            </div>
+          </div>
+
+          <div class="border-top mt-4 pt-3">
+            <div class="d-flex justify-content-between fw-bold">
+              <span>ESTIMATED TOTAL</span><span id="mTotal">₱0</span>
+            </div>
+            <p class="small text-muted mb-0" id="mDuration"></p>
+            <p class="small text-muted mt-2 mb-0" id="mPolicy"></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">CLOSE</button>
+          <button type="submit" class="btn btn-dark btn-sm">SAVE CHANGES</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5 fw-bold" id="cancelTitle">Cancel appointment</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-2" id="cText"></p>
+          <p class="small text-muted mb-0" id="cPolicy"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">KEEP APPOINTMENT</button>
+          <button type="button" class="btn btn-dark btn-sm" id="confirmCancel">CANCEL APPOINTMENT</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer class="border-top py-4 mt-5">
     <div class="container d-flex justify-content-between">
@@ -227,9 +229,282 @@
 
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.bundle.min.js"></script>
-  <script src="js/mock-data.js"></script>
-  <script src="js/charts.js"></script>
+  <script src="js/businesses-data.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    $(function () {
+      var KEY = 'pawbook_bookings';          
+      var SEEDED = 'pawbook_bookings_seeded';
+      var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      var STEP = 30; 
+
+      function read(key, fallback) {
+        try { var v = JSON.parse(localStorage.getItem(key)); return Array.isArray(v) ? v : fallback; }
+        catch (e) { return fallback; }
+      }
+      var bookings = read(KEY, []);
+      function save() { localStorage.setItem(KEY, JSON.stringify(bookings)); }
+
+      function money(n) { return '₱' + Number(n).toLocaleString(); }
+      function priceOf(s) { return Number(String(s.price).replace(/,/g, '')) || 0; }
+      function toMin(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
+      function to12h(min) {
+        var h = Math.floor(min / 60), m = min % 60, ap = h >= 12 ? 'PM' : 'AM';
+        return ((h % 12) || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
+      }
+      function parseTime(str) {
+        var m = /^(\d+):(\d+)\s*(AM|PM)$/i.exec(str || '');
+        if (!m) return 0;
+        var h = +m[1] % 12; if (m[3].toUpperCase() === 'PM') h += 12;
+        return h * 60 + +m[2];
+      }
+      function parseDate(v) { var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+      function isoDate(d) {
+        var m = d.getMonth() + 1, day = d.getDate();
+        return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
+      }
+      function fmtDate(v) {
+        return parseDate(v).toLocaleDateString('en-PH', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+      }
+      
+      function hash(str) { var h = 0; for (var i = 0; i < str.length; i++) { h = (h * 31 + str.charCodeAt(i)) >>> 0; } return h; }
+
+      
+      if (!localStorage.getItem(SEEDED) && typeof PawBookBiz !== 'undefined') {
+        var base = new Date(); base.setHours(0, 0, 0, 0);
+        [
+          { off: 5,   biz: 1, svc: ['Full Grooming'],         time: 600, pet: 'Dalla',   status: 'Confirmed' },
+          { off: 12,  biz: 2, svc: ['Spa Bath'],              time: 780, pet: 'Kiwi',    status: 'Pending' },
+          { off: -4,  biz: 1, svc: ['Full Grooming'],         time: 600, pet: 'Dalla',   status: 'Confirmed' },
+          { off: -19, biz: 3, svc: ['De-shedding Treatment'], time: 660, pet: 'Charlie', status: 'Confirmed' },
+          { off: -37, biz: 2, svc: ['Spa Bath'],              time: 840, pet: 'Kiwi',    status: 'Confirmed' }
+        ].forEach(function (x) {
+          var biz = PawBookBiz.get(x.biz); if (!biz) return;
+          var d = new Date(base); d.setDate(d.getDate() + x.off);
+          for (var i = 0; i < 7; i++) {            // move to a day the shop is open
+            var h = (biz.hours || {})[DAYS[(d.getDay() + 6) % 7]];
+            if (h && !h.closed) break;
+            d.setDate(d.getDate() + 1);
+          }
+          var sv = (biz.services || []).filter(function (s) { return x.svc.indexOf(s.name) !== -1; });
+          bookings.push({
+            ref: 'PB-' + Math.random().toString(36).slice(2, 8).toUpperCase(),
+            businessId: x.biz, business: biz.fields.bizName,
+            date: isoDate(d), time: to12h(x.time), pet: x.pet,
+            services: sv.map(function (s) { return s.name; }),
+            total: sv.reduce(function (t, s) { return t + priceOf(s); }, 0),
+            status: x.status, customer: { name: 'Juan Dela Cruz' }, notes: ''
+          });
+        });
+        save();
+        localStorage.setItem(SEEDED, '1');
+      }
+
+      
+      function startOf(b) { return parseDate(b.date).getTime() + parseTime(b.time) * 60000; }
+      function isPast(b) { return startOf(b) < Date.now(); }
+      function displayStatus(b) {
+        if (b.status === 'Cancelled' || b.status === 'Rejected' || b.status === 'Completed') return b.status;
+        if (isPast(b)) return b.status === 'Confirmed' ? 'Completed' : 'Expired';
+        return b.status || 'Pending';
+      }
+      function badge(st) {
+        var $b = $('<span class="badge"></span>').text(st);
+        if (st === 'Confirmed' || st === 'Completed') $b.addClass('bg-dark');
+        else if (st === 'Pending') $b.addClass('bg-secondary');
+        else $b.addClass('bg-light text-dark border');
+        return $b;
+      }
+      function find(ref) { return bookings.filter(function (b) { return b.ref === ref; })[0]; }
+
+      function row(b, $actions) {
+        var $tr = $('<tr></tr>');
+        $tr.append($('<td class="small"></td>')
+          .append($('<div></div>').text(fmtDate(b.date) + ' · ' + b.time))
+          .append($('<div class="text-muted"></div>').text(b.ref)));
+        $tr.append($('<td class="small"></td>').text(b.business));
+        $tr.append($('<td class="small"></td>').text((b.services || []).join(', ')));
+        $tr.append($('<td class="small"></td>').text(b.pet || '—'));
+        $tr.append($('<td class="small"></td>').text(money(b.total || 0)));
+        $tr.append($('<td></td>').append(badge(displayStatus(b))));
+        $tr.append($('<td class="text-end text-nowrap"></td>').append($('<div class="d-flex gap-2 justify-content-end"></div>').append($actions)));
+        return $tr;
+      }
+
+      function render() {
+        var up = [], past = [];
+        bookings.forEach(function (b) { (isPast(b) || ['Cancelled', 'Rejected', 'Completed'].indexOf(b.status) !== -1 ? past : up).push(b); });
+        up.sort(function (a, b) { return startOf(a) - startOf(b); });
+        past.sort(function (a, b) { return startOf(b) - startOf(a); });
+
+        var $u = $('#upcomingBody').empty();
+        up.forEach(function (b) {
+          var $m = $('<button type="button" class="btn btn-outline-dark btn-sm">MODIFY</button>').on('click', function () { openModify(b.ref); });
+          var $c = $('<button type="button" class="btn btn-dark btn-sm">CANCEL</button>').on('click', function () { openCancel(b.ref); });
+          $u.append(row(b, [$m, $c]));
+        });
+        $('#upcomingEmpty').toggleClass('d-none', up.length > 0);
+
+        var $h = $('#historyBody').empty();
+        past.forEach(function (b) {
+          var $again = $('<a class="btn btn-outline-dark btn-sm">BOOK AGAIN</a>').attr('href', 'book-appointment.html?id=' + b.businessId);
+          $h.append(row(b, [$again]));
+        });
+        $('#historyEmpty').toggleClass('d-none', past.length > 0);
+
+        $('#statUpcoming').text(up.length);
+        $('#statCompleted').text(past.filter(function (b) { return displayStatus(b) === 'Completed'; }).length);
+      }
+
+      function showAlert(type, msg) {
+        var $a = $('<div class="alert alert-' + type + ' small alert-dismissible" role="alert"></div>').text(msg)
+          .append('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>');
+        $('#apptAlert').empty().append($a);
+      }
+
+      
+      var pets = read('pawbook_pets_v2', null);
+      if (pets === null) pets = [{ name: 'Dalla', breed: 'Mixed breed' }, { name: 'Kiwi', breed: 'Mixed breed' }, { name: 'Charlie', breed: 'Mixed breed' }];
+      pets.forEach(function (p) {
+        var $card = $('<a class="card h-100 text-center text-decoration-none text-reset"></a>').attr('href', 'my-pets.html');
+        var $b = $('<div class="card-body"></div>')
+          .append('<div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;"><small class="text-muted">🐾</small></div>')
+          .append($('<h5 class="h6 mb-1"></h5>').text(p.name))
+          .append($('<p class="small text-muted mb-0"></p>').text(p.breed || ''));
+        if ($('#dashPets').length) $('#dashPets').append($('<div class="col-6 col-md-3"></div>').append($card.append($b)));
+      });
+      $('#statPets').text(pets.length);
+
+     
+      var cancelModal = new bootstrap.Modal(document.getElementById('cancelModal'));
+      var cancelling = null;
+      function openCancel(ref) {
+        var b = find(ref); if (!b) return;
+        cancelling = b;
+        $('#cText').text('Cancel your appointment at ' + b.business + ' on ' + fmtDate(b.date) + ' at ' + b.time + '?');
+        var biz = (typeof PawBookBiz !== 'undefined') ? PawBookBiz.get(b.businessId) : null;
+        $('#cPolicy').text(biz && biz.fields.bizPolicy ? 'Cancellation policy: ' + biz.fields.bizPolicy : '');
+        cancelModal.show();
+      }
+      $('#confirmCancel').on('click', function () {
+        if (!cancelling) return;
+        cancelling.status = 'Cancelled';
+        save(); render();
+        cancelModal.hide();
+        showAlert('success', 'Your appointment at ' + cancelling.business + ' on ' + fmtDate(cancelling.date) + ' was cancelled.');
+        cancelling = null;
+      });
+
+      
+      var modifyModal = new bootstrap.Modal(document.getElementById('modifyModal'));
+      var editing = null, editBiz = null, pickedSlot = null, originalMin = 0;
+
+      function selectedServices() {
+        return $('.m-svc:checked').map(function () { return editBiz.services[+this.value]; }).get();
+      }
+      function totalDuration() {
+        return selectedServices().reduce(function (t, s) { return t + (Number(s.time) || 60); }, 0);
+      }
+
+      function buildSlots() {
+        var $s = $('#mSlots').empty(), $hint = $('#mSlotHint');
+        var date = $('#mDate').val(), dur = totalDuration(), avail = [];
+        if (!dur) { $hint.text('Choose at least one service to see available times.'); pickedSlot = null; return; }
+        if (!date) { $hint.text('Choose a date to see available times.'); pickedSlot = null; return; }
+
+        var d = parseDate(date);
+        var h = (editBiz.hours || {})[DAYS[(d.getDay() + 6) % 7]];
+        if (!h || h.closed) { $hint.text(editBiz.fields.bizName + ' is closed on this day. Try another date.'); pickedSlot = null; return; }
+
+        var open = toMin(h.open), close = toMin(h.close), now = new Date();
+        var nowMin = (date === isoDate(now)) ? now.getHours() * 60 + now.getMinutes() + 30 : -1;
+        for (var t = open; t + dur <= close; t += STEP) {
+          var own = (date === editing.date && t === originalMin);      // the time you already have stays available
+          var taken = !own && ((hash(editBiz.id + date + t) % 5 === 0) || t < nowMin);
+          var id = 'mslot' + t;
+          var $in = $('<input type="radio" class="btn-check" name="mslot" autocomplete="off">')
+            .attr('id', id).val(t).prop('disabled', taken).prop('checked', !taken && t === pickedSlot);
+          $s.append($in, $('<label class="btn btn-outline-dark btn-sm"></label>').attr('for', id).text(to12h(t)));
+          if (!taken) avail.push(t);
+        }
+        if (avail.indexOf(pickedSlot) === -1) pickedSlot = null;     // chosen time no longer fits
+        $hint.text(avail.length ? avail.length + ' times available. Your visit takes about ' + dur + ' minutes.' : 'No times left on this day. Try another date.');
+      }
+
+      function updateSummary() {
+        var sv = selectedServices(), total = sv.reduce(function (t, s) { return t + priceOf(s); }, 0), dur = totalDuration();
+        $('#mTotal').text(money(total));
+        $('#mDuration').text(dur ? 'Duration: about ' + dur + ' minutes. Final price may vary by pet size and coat.' : '');
+      }
+
+      function openModify(ref) {
+        var b = find(ref); if (!b) return;
+        var biz = (typeof PawBookBiz !== 'undefined') ? PawBookBiz.get(b.businessId) : null;
+        if (!biz) { showAlert('danger', b.business + ' is no longer listed, so this appointment cannot be changed here.'); return; }
+        editing = b; editBiz = biz; originalMin = parseTime(b.time); pickedSlot = originalMin;
+
+        $('#mError').addClass('d-none');
+        $('#mBiz').text(biz.fields.bizName);
+        $('#mPlace').text([biz.fields.bizAddress, biz.fields.bizCity].filter(Boolean).join(', '));
+        $('#mPolicy').text(biz.fields.bizPolicy ? 'Policy: ' + biz.fields.bizPolicy : '');
+
+        var $l = $('#mServices').empty();
+        (biz.services || []).forEach(function (s, i) {
+          var id = 'msvc' + i;
+          var $r = $('<label class="list-group-item d-flex align-items-center gap-3" style="cursor:pointer;"></label>').attr('for', id);
+          $r.append($('<input class="form-check-input flex-shrink-0 m-svc" type="checkbox">').attr('id', id).val(i)
+            .prop('checked', (b.services || []).indexOf(s.name) !== -1));
+          $r.append($('<div class="flex-grow-1"></div>')
+            .append($('<div class="small fw-bold"></div>').text(s.name))
+            .append($('<div class="small text-muted"></div>').text((s.time || '—') + ' min')));
+          $r.append($('<div class="small fw-bold"></div>').text(money(priceOf(s))));
+          $l.append($r);
+        });
+
+        var today = new Date(), maxD = new Date(today); maxD.setDate(maxD.getDate() + 60);
+        $('#mDate').attr({ min: isoDate(today), max: isoDate(maxD) }).val(b.date);
+
+        var names = pets.map(function (p) { return p.name; });
+        if (b.pet && names.indexOf(b.pet) === -1) names.unshift(b.pet);
+        var $p = $('#mPet').empty();
+        names.forEach(function (n) { $p.append($('<option></option>').val(n).text(n)); });
+        $p.val(b.pet);
+        $('#mNotes').val(b.notes || '');
+
+        buildSlots(); updateSummary();
+        modifyModal.show();
+      }
+
+      $('#mServices').on('change', '.m-svc', function () { buildSlots(); updateSummary(); });
+      $('#mDate').on('change', function () { buildSlots(); });
+      $('#mSlots').on('change', 'input[name=mslot]', function () { pickedSlot = +this.value; });
+
+      $('#modifyForm').on('submit', function (e) {
+        e.preventDefault();
+        var sv = selectedServices(), errs = [];
+        if (!sv.length) errs.push('Select at least one service.');
+        if (!$('#mDate').val()) errs.push('Choose a date.');
+        else if (pickedSlot === null) errs.push('Pick an available time.');
+        if (!$('#mPet').val()) errs.push('Select your pet.');
+        if (errs.length) { $('#mError').text(errs.join(' ')).removeClass('d-none'); return; }
+
+        var newDate = $('#mDate').val(), newTime = to12h(pickedSlot), names = sv.map(function (s) { return s.name; });
+        var changed = newDate !== editing.date || newTime !== editing.time || names.join('|') !== (editing.services || []).join('|');
+
+        editing.date = newDate; editing.time = newTime; editing.services = names;
+        editing.total = sv.reduce(function (t, s) { return t + priceOf(s); }, 0);
+        editing.pet = $('#mPet').val(); editing.notes = $('#mNotes').val().trim();
+        var reconfirm = changed && editing.status === 'Confirmed';
+        if (reconfirm) editing.status = 'Pending';       
+
+        save(); render();
+        modifyModal.hide();
+        showAlert('success', 'Your appointment at ' + editing.business + ' was updated for ' + fmtDate(editing.date) + ' at ' + editing.time + '.' + (reconfirm ? ' The shop will confirm the change.' : ''));
+      });
+
+      render();
+    });
+  </script>
 
 </body>
 </html>

@@ -60,13 +60,13 @@
 
         <div class="row g-2 mb-4">
           <div class="col-8">
-            <div class="bg-light d-flex align-items-center justify-content-center border rounded" style="height: 260px;">
-              <small class="text-muted">[Cover Image]</small>
+            <div class="bg-light d-flex align-items-center justify-content-center border rounded" style="height: 260px;" id="pCover">
+              <small class="text-muted">[Image]</small>
             </div>
           </div>
           <div class="col-4 d-flex flex-column gap-2">
-            <div class="bg-light d-flex align-items-center justify-content-center border rounded flex-fill"><small class="text-muted">[Image]</small></div>
-            <div class="bg-light d-flex align-items-center justify-content-center border rounded flex-fill"><small class="text-muted">[Image]</small></div>
+            <div class="bg-light d-flex align-items-center justify-content-center border rounded flex-fill" id="pImg1" style="min-height: 120px;"><small class="text-muted">[Image]</small></div>
+            <div class="bg-light d-flex align-items-center justify-content-center border rounded flex-fill" id="pImg2" style="min-height: 120px;"><small class="text-muted">[Image]</small></div>
           </div>
         </div>
 
@@ -181,7 +181,7 @@
         if (window.history.length > 1) { e.preventDefault(); window.history.back(); }
       });
 
-      var OWNER_ID = 1; // business managed from manage-business.html
+      var OWNER_ID = 1; 
       var STORAGE_KEY = 'pawbook_business_profile';
       var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 
@@ -204,6 +204,11 @@
         } catch (e) {}
       }
       var f = data.fields || {}, c = data.checks || {};
+
+      
+      PawBookBiz.setPhoto($('#pCover'), biz.image, f.bizName);
+      PawBookBiz.setPhoto($('#pImg1'), (biz.gallery || [])[0], f.bizName);
+      PawBookBiz.setPhoto($('#pImg2'), (biz.gallery || [])[1], f.bizName);
 
       function badge(text) {
         return $('<span class="badge bg-light text-dark border"></span>').text(text);

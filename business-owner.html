@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawBook — My Business</title>
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">PAWBOOK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="find-groomer.html">BUSINESSES</a></li>
+          <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
+          <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
+          <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-light border-bottom">
+    <div class="container py-4 d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div>
+        <h1 class="h3 fw-bold mb-1">MY BUSINESS</h1>
+        <p class="text-muted small mb-0">Manage your profile, branches, bookings and posts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container py-4">
+    <div id="alertBox"></div>
+
+    <ul class="nav nav-tabs mb-4" role="tablist">
+      <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-pane" type="button" role="tab">Profile</button></li>
+      <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#branches-pane" type="button" role="tab">Branches</button></li>
+      <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#schedule-pane" type="button" role="tab">Scheduling <span class="badge bg-dark d-none" id="pendingBadge">0</span></button></li>
+      <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#posts-pane" type="button" role="tab">Posts</button></li>
+    </ul>
+
+    <div class="tab-content">
+    <div class="tab-pane fade show active" id="profile-pane" role="tabpanel">
+    <form id="bizForm" novalidate>
+
+   
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="h6 fw-bold mb-3">BUSINESS INFORMATION</h2>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small" for="bizName">BUSINESS NAME *</label>
+              <input type="text" class="form-control" id="bizName" maxlength="80" required>
+              <div class="invalid-feedback">Enter your business name.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small" for="bizType">BUSINESS TYPE</label>
+              <select class="form-select" id="bizType">
+                <option>Grooming Salon</option>
+                <option>Pet Spa</option>
+                <option>Mobile Grooming</option>
+                <option>Pet Boutique &amp; Grooming</option>
+                <option>Veterinary Clinic</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label small" for="bizTagline">TAGLINE</label>
+              <input type="text" class="form-control" id="bizTagline" maxlength="80" placeholder="A short line under your name">
+            </div>
+            <div class="col-12">
+              <label class="form-label small" for="bizDesc">DESCRIPTION *</label>
+              <textarea class="form-control" id="bizDesc" rows="4" maxlength="600" required placeholder="Tell customers about your business, your groomers and what makes you different."></textarea>
+              <div class="invalid-feedback">Add a short description.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="h6 fw-bold mb-3">CONTACT INFORMATION</h2>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small" for="bizPhone">PHONE *</label>
+              <input type="tel" class="form-control" id="bizPhone" placeholder="+63 917 123 4567" required>
+              <div class="invalid-feedback">Enter a phone number.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small" for="bizEmail">EMAIL *</label>
+              <input type="email" class="form-control" id="bizEmail" placeholder="hello@yourshop.com" required>
+              <div class="invalid-feedback">Enter a valid email address.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small" for="bizWebsite">WEBSITE</label>
+              <input type="url" class="form-control" id="bizWebsite" placeholder="https://yourshop.com">
+              <div class="invalid-feedback">Start the link with http:// or https://</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small" for="bizSocial">SOCIAL MEDIA LINK</label>
+              <input type="url" class="form-control" id="bizSocial" placeholder="https://www.instagram.com/yourshop/">
+              <div class="invalid-feedback">Start the link with http:// or https://</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small" for="bizAddress">ADDRESS *</label>
+              <input type="text" class="form-control" id="bizAddress" required>
+              <div class="invalid-feedback">Enter your street address.</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small" for="bizCity">CITY *</label>
+              <input type="text" class="form-control" id="bizCity" required>
+              <div class="invalid-feedback">Enter your city.</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small" for="bizBranches">BRANCHES</label>
+              <input type="number" class="form-control" id="bizBranches" min="1" max="99">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h6 fw-bold mb-0">SERVICES &amp; PRICING</h2>
+            <button type="button" class="btn btn-outline-dark btn-sm" id="addService">+ ADD SERVICE</button>
+          </div>
+          <div class="row g-2 d-none d-md-flex small text-muted mb-1">
+            <div class="col-md-5">SERVICE NAME</div>
+            <div class="col-md-3">PRICE (₱)</div>
+            <div class="col-md-3">DURATION (MIN)</div>
+          </div>
+          <div id="serviceList"></div>
+          <p class="small text-muted mb-0 d-none" id="noServices">No services yet. Add at least one so customers can book.</p>
+        </div>
+      </div>
+
+      
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="h6 fw-bold mb-3">OPERATING HOURS</h2>
+          <div id="hoursList"></div>
+          <button type="button" class="btn btn-link btn-sm px-0 mt-2" id="copyMonday">Copy Monday's hours to every open day</button>
+        </div>
+      </div>
+
+      
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="h6 fw-bold mb-3">OTHER IMPORTANT INFORMATION</h2>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="small text-muted mb-2">PETS WE SERVE</div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="petDog"><label class="form-check-label" for="petDog">Dogs</label></div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="petCat"><label class="form-check-label" for="petCat">Cats</label></div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="petSmall"><label class="form-check-label" for="petSmall">Small animals</label></div>
+            </div>
+            <div class="col-md-4">
+              <div class="small text-muted mb-2">PAYMENT METHODS</div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="payCash"><label class="form-check-label" for="payCash">Cash</label></div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="payCard"><label class="form-check-label" for="payCard">Card</label></div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="payEwallet"><label class="form-check-label" for="payEwallet">E-wallet</label></div>
+            </div>
+            <div class="col-md-4">
+              <div class="small text-muted mb-2">AMENITIES</div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="amAC"><label class="form-check-label" for="amAC">Air-conditioned</label></div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="amWifi"><label class="form-check-label" for="amWifi">Free Wi-Fi</label></div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="amParking"><label class="form-check-label" for="amParking">Parking</label></div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="amPickup"><label class="form-check-label" for="amPickup">Pick-up &amp; delivery</label></div>
+              <div class="form-check"><input class="form-check-input chk" type="checkbox" id="amWalkin"><label class="form-check-label" for="amWalkin">Walk-ins welcome</label></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small" for="bizPolicy">CANCELLATION POLICY</label>
+              <textarea class="form-control" id="bizPolicy" rows="3" maxlength="300" placeholder="e.g. Please cancel at least 24 hours before your appointment."></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small" for="bizNotes">NOTES FOR CUSTOMERS</label>
+              <textarea class="form-control" id="bizNotes" rows="3" maxlength="300" placeholder="e.g. Dogs must be up to date on vaccinations."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-wrap gap-2 justify-content-between">
+        <button type="button" class="btn btn-outline-dark" id="resetBtn">RESET TO DEFAULT</button>
+        <button type="submit" class="btn btn-dark">SAVE BUSINESS PROFILE</button>
+      </div>
+    </form>
+    </div>
+
+  
+    <div class="tab-pane fade" id="branches-pane" role="tabpanel">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+          <h2 class="h6 fw-bold mb-1">BRANCH MANAGEMENT</h2>
+          <p class="small text-muted mb-0">Each branch has its own address, contact information and availability.</p>
+        </div>
+        <button type="button" class="btn btn-dark btn-sm" id="addBranchBtn">+ ADD BRANCH</button>
+      </div>
+      <div class="row g-3" id="branchList"></div>
+      <div class="text-center py-5 d-none" id="branchEmpty">
+        <p class="fw-bold mb-1">No branches yet</p>
+        <p class="small text-muted mb-0">Add your first branch so customers know where to find you.</p>
+      </div>
+    </div>
+
+  
+    <div class="tab-pane fade" id="schedule-pane" role="tabpanel">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h2 class="h6 fw-bold mb-0">CUSTOMER BOOKINGS</h2>
+        <select class="form-select form-select-sm w-auto" id="bookingFilter" aria-label="Filter bookings">
+          <option value="all">All bookings</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Completed">Completed</option>
+          <option value="Closed">Rejected / Cancelled</option>
+        </select>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th class="small text-muted">DATE &amp; TIME</th>
+              <th class="small text-muted">CUSTOMER</th>
+              <th class="small text-muted">PET</th>
+              <th class="small text-muted">SERVICES</th>
+              <th class="small text-muted">TOTAL</th>
+              <th class="small text-muted">STATUS</th>
+              <th class="small text-muted text-end">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="bookingRows"></tbody>
+        </table>
+      </div>
+      <div class="text-center py-5 d-none" id="bookingEmpty">
+        <p class="fw-bold mb-1">No bookings to show</p>
+        <p class="small text-muted mb-0">Bookings made by customers for your business appear here.</p>
+      </div>
+    </div>
+
+
+    <div class="tab-pane fade" id="posts-pane" role="tabpanel">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h6 fw-bold mb-3">CREATE POST</h2>
+              <p class="small text-muted">Advertise your services, share an announcement or any other update. Posts appear in the community feed.</p>
+              <div class="alert alert-danger small d-none" id="postErr" role="alert"></div>
+              <form id="bizPostForm" novalidate>
+                <label class="form-label small" for="postType">POST TYPE</label>
+                <select class="form-select mb-3" id="postType">
+                  <option>Advertisement</option>
+                  <option>Announcement</option>
+                  <option>Update</option>
+                </select>
+                <label class="form-label small" for="postTitle">TITLE (OPTIONAL)</label>
+                <input type="text" class="form-control mb-3" id="postTitle" maxlength="80" placeholder="e.g. 20% off full grooming this weekend">
+                <label class="form-label small" for="postBody">MESSAGE *</label>
+                <textarea class="form-control mb-1" id="postBody" rows="5" maxlength="500" placeholder="Write your post..."></textarea>
+                <div class="small text-muted text-end mb-3"><span id="postCount">0</span>/500</div>
+                <button type="submit" class="btn btn-dark w-100">PUBLISH POST</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <h2 class="h6 fw-bold mb-3">YOUR POSTS</h2>
+          <div id="myPosts"></div>
+          <p class="small text-muted d-none" id="noPosts">You have not posted anything yet.</p>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </section>
+
+
+  <div class="modal fade" id="branchModal" tabindex="-1" aria-labelledby="branchModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <form class="modal-content" id="branchForm" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title h5 fw-bold" id="branchModalTitle">Add branch</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger small d-none" id="branchErr" role="alert"></div>
+          <div class="row g-3 mb-4">
+            <div class="col-12">
+              <label class="form-label small" for="brName">BRANCH NAME *</label>
+              <input type="text" class="form-control" id="brName" maxlength="60" placeholder="e.g. Quezon City branch">
+            </div>
+            <div class="col-md-8">
+              <label class="form-label small" for="brAddress">ADDRESS *</label>
+              <input type="text" class="form-control" id="brAddress">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small" for="brCity">CITY *</label>
+              <input type="text" class="form-control" id="brCity">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small" for="brPhone">PHONE *</label>
+              <input type="tel" class="form-control" id="brPhone">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small" for="brEmail">EMAIL</label>
+              <input type="email" class="form-control" id="brEmail">
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="small text-muted">AVAILABILITY</div>
+            <div class="form-check form-switch mb-0">
+              <input class="form-check-input" type="checkbox" id="brAccepting" checked>
+              <label class="form-check-label small" for="brAccepting">Accepting bookings</label>
+            </div>
+          </div>
+          <div id="brHours"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">CANCEL</button>
+          <button type="submit" class="btn btn-dark btn-sm">SAVE BRANCH</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="reschedModal" tabindex="-1" aria-labelledby="reschedTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="reschedForm" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title h5 fw-bold" id="reschedTitle">Reschedule booking</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="small text-muted" id="reschedInfo"></p>
+          <div class="alert alert-danger small d-none" id="reschedErr" role="alert"></div>
+          <label class="form-label small" for="rsDate">NEW DATE</label>
+          <input type="date" class="form-control mb-3" id="rsDate" required>
+          <label class="form-label small" for="rsTime">NEW TIME</label>
+          <select class="form-select" id="rsTime"></select>
+          <p class="small text-muted mt-2 mb-0" id="rsHint"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">CANCEL</button>
+          <button type="submit" class="btn btn-dark btn-sm">SAVE NEW TIME</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="border-top py-4 mt-5">
+    <div class="container d-flex justify-content-between">
+      <div>
+        <a href="#" class="text-decoration-none me-3">About</a>
+        <a href="#" class="text-decoration-none me-3">Contact</a>
+        <a href="#" class="text-decoration-none me-3">Privacy</a>
+        <a href="#" class="text-decoration-none">Terms</a>
+      </div>
+      <span class="text-muted">&copy; 2026 PawBook</span>
+    </div>
+  </footer>
+
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/businesses-data.js"></script>
+  <script>
+    $(function () {
+    
+      var loggedIn = false, role = '';
+      try { loggedIn = localStorage.getItem('pawbook_logged_in') === 'true'; role = localStorage.getItem('pawbook_role') || ''; } catch (e) {}
+      if (!loggedIn || role !== 'business') { window.location.href = 'login-signup.html'; return; }
+
+      var OWNER_ID = 1;                          // the store this account manages
+      var KEY = 'pawbook_business_profile';      // PawBookBiz layers this over the mock data
+      var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      var FIELDS = ['bizName','bizType','bizTagline','bizDesc','bizPhone','bizEmail','bizWebsite','bizSocial','bizAddress','bizCity','bizBranches','bizPolicy','bizNotes'];
+      var CHECKS = ['petDog','petCat','petSmall','payCash','payCard','payEwallet','amAC','amWifi','amParking','amPickup','amWalkin'];
+
+      var base = mockBusinesses.filter(function (b) { return b.id === OWNER_ID; })[0];
+      var current = PawBookBiz.get(OWNER_ID);    // defaults plus any saved edits
+      var hasSaved = false;
+      try { var s = JSON.parse(localStorage.getItem(KEY)); hasSaved = !!(s && s.fields && s.fields.bizName); } catch (e) {}
+
+      function alertBox(type, msg) {
+        var $a = $('<div class="alert alert-' + type + ' alert-dismissible" role="alert"></div>').text(msg)
+          .append('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>');
+        $('#alertBox').empty().append($a);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+     
+      function addServiceRow(sv) {
+        sv = sv || {};
+        var $r = $('<div class="row g-2 align-items-center mb-2 svc-row"></div>');
+        $r.append($('<div class="col-12 col-md-5"></div>').append($('<input type="text" class="form-control s-name" maxlength="60" placeholder="Service name" aria-label="Service name">').val(sv.name || '')));
+        $r.append($('<div class="col-6 col-md-3"></div>').append($('<input type="number" class="form-control s-price" min="0" step="1" placeholder="Price" aria-label="Price in pesos">').val(sv.price || '')));
+        $r.append($('<div class="col-6 col-md-3"></div>').append($('<input type="number" class="form-control s-time" min="15" step="15" placeholder="Minutes" aria-label="Duration in minutes">').val(sv.time || '')));
+        $r.append($('<div class="col-12 col-md-1 text-md-end"></div>').append('<button type="button" class="btn btn-outline-dark btn-sm s-del" aria-label="Remove service">✕</button>'));
+        $('#serviceList').append($r);
+        syncServiceEmpty();
+      }
+      function syncServiceEmpty() { $('#noServices').toggleClass('d-none', $('.svc-row').length > 0); }
+      $('#addService').on('click', function () { addServiceRow(); $('.s-name').last().focus(); });
+      $('#serviceList').on('click', '.s-del', function () { $(this).closest('.svc-row').remove(); syncServiceEmpty(); });
+
+     
+      function addHourRow(day, h) {
+        h = h || { closed: false, open: '09:00', close: '18:00' };
+        var id = 'h' + day;
+        var $r = $('<div class="row g-2 align-items-center mb-2 hr-row"></div>').attr('data-day', day);
+        $r.append($('<div class="col-12 col-md-3 fw-bold small"></div>').text(day));
+        $r.append($('<div class="col-4 col-md-2"></div>').append(
+          $('<div class="form-check"></div>')
+            .append($('<input class="form-check-input h-closed" type="checkbox">').attr('id', id).prop('checked', !!h.closed))
+            .append($('<label class="form-check-label small"></label>').attr('for', id).text('Closed'))));
+        $r.append($('<div class="col-4 col-md-3"></div>').append($('<input type="time" class="form-control h-open" aria-label="Opens">').val(h.open || '09:00')));
+        $r.append($('<div class="col-4 col-md-3"></div>').append($('<input type="time" class="form-control h-close" aria-label="Closes">').val(h.close || '18:00')));
+        $('#hoursList').append($r);
+        toggleRow($r);
+      }
+      function toggleRow($r) { $r.find('.h-open, .h-close').prop('disabled', $r.find('.h-closed').is(':checked')); }
+      $('#hoursList').on('change', '.h-closed', function () { toggleRow($(this).closest('.hr-row')); });
+      $('#copyMonday').on('click', function () {
+        var $m = $('.hr-row').first(), o = $m.find('.h-open').val(), c = $m.find('.h-close').val();
+        $('.hr-row').slice(1).each(function () {
+          if (!$(this).find('.h-closed').is(':checked')) { $(this).find('.h-open').val(o); $(this).find('.h-close').val(c); }
+        });
+      });
+
+    
+      function load(data) {
+        var f = data.fields || {}, c = data.checks || {};
+        FIELDS.forEach(function (k) { $('#' + k).val(f[k] != null ? f[k] : ''); });
+        if (f.bizType && !$('#bizType option').filter(function () { return this.value === f.bizType; }).length) {
+          $('#bizType').append($('<option></option>').text(f.bizType));
+          $('#bizType').val(f.bizType);
+        }
+        CHECKS.forEach(function (k) { $('#' + k).prop('checked', !!c[k]); });
+        $('#serviceList').empty(); (data.services || []).forEach(addServiceRow); syncServiceEmpty();
+        $('#hoursList').empty(); DAYS.forEach(function (d) { addHourRow(d, (data.hours || {})[d]); });
+        $('#bizForm').removeClass('was-validated').find('.is-invalid').removeClass('is-invalid');
+      }
+      load(current);
+      if (!hasSaved) $('#alertBox').html('<div class="alert alert-info small">This is your starting profile. Edit anything and press <strong>SAVE BUSINESS PROFILE</strong> so customers see your changes.</div>');
+
+   
+      function isUrl(v) { return !v || /^https?:\/\/\S+\.\S+/i.test(v); }
+      $('#bizForm').on('submit', function (e) {
+        e.preventDefault();
+        var bad = [];
+        function flag(id, cond) { $('#' + id).toggleClass('is-invalid', !cond); if (!cond) bad.push(id); }
+
+        ['bizName','bizDesc','bizPhone','bizAddress','bizCity'].forEach(function (id) { flag(id, $.trim($('#' + id).val()) !== ''); });
+        flag('bizEmail', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($.trim($('#bizEmail').val())));
+        flag('bizWebsite', isUrl($.trim($('#bizWebsite').val())));
+        flag('bizSocial', isUrl($.trim($('#bizSocial').val())));
+
+        var services = [], svcErr = false;
+        $('.svc-row').each(function () {
+          var n = $.trim($(this).find('.s-name').val()), p = $(this).find('.s-price').val(), t = $(this).find('.s-time').val();
+          $(this).find('input').removeClass('is-invalid');
+          if (!n && !p && !t) return;                   // skip blank rows
+          var ok = true;
+          if (!n) { $(this).find('.s-name').addClass('is-invalid'); ok = false; }
+          if (p === '' || +p < 0) { $(this).find('.s-price').addClass('is-invalid'); ok = false; }
+          if (t === '' || +t < 15) { $(this).find('.s-time').addClass('is-invalid'); ok = false; }
+          if (!ok) { svcErr = true; return; }
+          services.push({ name: n, price: String(Math.round(+p)), time: String(Math.round(+t)) });
+        });
+        if (svcErr) bad.push('services');
+        if (!services.length && !svcErr) { bad.push('services'); }
+
+        var hours = {}, hrErr = false, anyOpen = false;
+        $('.hr-row').each(function () {
+          var day = $(this).attr('data-day'), closed = $(this).find('.h-closed').is(':checked');
+          var o = $(this).find('.h-open').val(), c = $(this).find('.h-close').val();
+          $(this).find('input[type=time]').removeClass('is-invalid');
+          if (!closed) {
+            anyOpen = true;
+            if (!o || !c || o >= c) { $(this).find('input[type=time]').addClass('is-invalid'); hrErr = true; }
+          }
+          hours[day] = { closed: closed, open: o || '09:00', close: c || '18:00' };
+        });
+        if (hrErr) bad.push('hours');
+        else if (!anyOpen) bad.push('hours');
+
+        if (bad.length) {
+          var msgs = [];
+          if (bad.some(function (b) { return b !== 'services' && b !== 'hours'; })) msgs.push('Fix the highlighted fields.');
+          if (bad.indexOf('services') !== -1) msgs.push(svcErr ? 'Each service needs a name, a price and a duration (at least 15 minutes).' : 'Add at least one service.');
+          if (bad.indexOf('hours') !== -1) msgs.push(hrErr ? 'Closing time must be after opening time.' : 'Open on at least one day.');
+          alertBox('danger', msgs.join(' '));
+          var first = $('.is-invalid').first(); if (first.length) first.get(0).focus();
+          return;
+        }
+
+        var fields = {};
+        FIELDS.forEach(function (k) { fields[k] = $.trim($('#' + k).val()); });
+        var checks = {};
+        CHECKS.forEach(function (k) { checks[k] = $('#' + k).is(':checked'); });
+
+        try {
+          localStorage.setItem(KEY, JSON.stringify({ fields: fields, checks: checks, services: services, hours: hours }));
+        } catch (err) { alertBox('danger', 'Could not save in this browser.'); return; }
+        alertBox('success', 'Saved! Customers now see the updated profile for ' + fields.bizName + '.');
+      });
+
+     
+      $('#resetBtn').on('click', function () {
+        if (!window.confirm('Discard your saved changes and go back to the default profile?')) return;
+        try { localStorage.removeItem(KEY); } catch (e) {}
+        load({ fields: base.fields, checks: base.checks, services: base.services, hours: base.hours });
+        alertBox('success', 'Profile reset to the default.');
+      });
+    });
+  </script>
+  <script>
+    $(function () {
+      var loggedIn = false, role = '';
+      try { loggedIn = localStorage.getItem('pawbook_logged_in') === 'true'; role = localStorage.getItem('pawbook_role') || ''; } catch (e) {}
+      if (!loggedIn || role !== 'business') return;
+
+      var OWNER_ID = 1;
+      var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      function readList(key) { try { var v = JSON.parse(localStorage.getItem(key)); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
+      function toast(type, msg) {
+        var $a = $('<div class="alert alert-' + type + ' alert-dismissible" role="alert"></div>').text(msg)
+          .append('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>');
+        $('#alertBox').empty().append($a);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      function bizName() { var b = PawBookBiz.get(OWNER_ID); return b ? b.fields.bizName : 'Your business'; }
+      function clock(t) { var p = t.split(':'), h = +p[0]; return ((h % 12) || 12) + (p[1] === '00' ? '' : ':' + p[1]) + (h >= 12 ? 'PM' : 'AM'); }
+      function pad(n) { return (n < 10 ? '0' : '') + n; }
+      function isoDate(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+      function parseDate(v) { var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+      function fmtDate(v) { return parseDate(v).toLocaleDateString('en-PH', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }); }
+      function toMin(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
+      function to12h(min) { var h = Math.floor(min / 60), m = min % 60; return ((h % 12) || 12) + ':' + pad(m) + ' ' + (h >= 12 ? 'PM' : 'AM'); }
+      function parseTime(str) { var m = /^(\d+):(\d+)\s*(AM|PM)$/i.exec(str || ''); if (!m) return 0; var h = +m[1] % 12; if (m[3].toUpperCase() === 'PM') h += 12; return h * 60 + +m[2]; }
+
+      
+      var BKEY = 'pawbook_branches';
+      var branches = readList(BKEY);
+      function saveBranches() { localStorage.setItem(BKEY, JSON.stringify(branches)); }
+      var editingBranch = null;
+      var branchModal = new bootstrap.Modal(document.getElementById('branchModal'));
+
+      function hoursSummary(h) {
+        var open = DAYS.filter(function (d) { return h[d] && !h[d].closed; });
+        if (!open.length) return 'Closed all week';
+        var f = h[open[0]], same = open.every(function (d) { return h[d].open === f.open && h[d].close === f.close; });
+        var days = open.length === 7 ? 'Every day' : (open.length > 2 ? open[0].slice(0, 3) + '–' + open[open.length - 1].slice(0, 3) : open.map(function (d) { return d.slice(0, 3); }).join(', '));
+        return days + (same ? ' · ' + clock(f.open) + '–' + clock(f.close) : ' · varies');
+      }
+
+      function renderBranches() {
+        var $l = $('#branchList').empty();
+        branches.forEach(function (b) {
+          var $body = $('<div class="card-body d-flex flex-column"></div>');
+          $body.append($('<div class="d-flex justify-content-between align-items-start gap-2 mb-2"></div>')
+            .append($('<h3 class="h6 fw-bold mb-0"></h3>').text(b.name))
+            .append($('<span class="badge"></span>').addClass(b.accepting ? 'bg-dark' : 'bg-secondary').text(b.accepting ? 'Accepting bookings' : 'Not accepting')));
+          $body.append($('<p class="small mb-1"></p>').text([b.address, b.city].filter(Boolean).join(', ')));
+          $body.append($('<p class="small text-muted mb-1"></p>').text('📞 ' + b.phone + (b.email ? '  ·  ✉ ' + b.email : '')));
+          $body.append($('<p class="small text-muted mb-3"></p>').text('🕘 ' + hoursSummary(b.hours)));
+          var $a = $('<div class="d-flex gap-2 mt-auto"></div>');
+          $a.append($('<button type="button" class="btn btn-outline-dark btn-sm">UPDATE</button>').on('click', function () { openBranch(b.id); }));
+          $a.append($('<button type="button" class="btn btn-dark btn-sm">REMOVE</button>').on('click', function () {
+            if (!window.confirm('Remove "' + b.name + '"? This cannot be undone.')) return;
+            branches = branches.filter(function (x) { return x.id !== b.id; });
+            saveBranches(); renderBranches(); toast('success', 'Branch removed.');
+          }));
+          $body.append($a);
+          $l.append($('<div class="col-md-6"></div>').append($('<div class="card h-100"></div>').append($body)));
+        });
+        $('#branchEmpty').toggleClass('d-none', branches.length > 0);
+      }
+
+      function buildBranchHours(h) {
+        var $w = $('#brHours').empty();
+        DAYS.forEach(function (d) {
+          var v = (h && h[d]) || { closed: false, open: '09:00', close: '18:00' }, id = 'bh' + d;
+          var $r = $('<div class="row g-2 align-items-center mb-2 bh-row"></div>').attr('data-day', d);
+          $r.append($('<div class="col-12 col-md-3 fw-bold small"></div>').text(d));
+          $r.append($('<div class="col-4 col-md-2"></div>').append($('<div class="form-check"></div>')
+            .append($('<input class="form-check-input bh-closed" type="checkbox">').attr('id', id).prop('checked', !!v.closed))
+            .append($('<label class="form-check-label small"></label>').attr('for', id).text('Closed'))));
+          $r.append($('<div class="col-4 col-md-3"></div>').append($('<input type="time" class="form-control bh-open" aria-label="Opens">').val(v.open)));
+          $r.append($('<div class="col-4 col-md-3"></div>').append($('<input type="time" class="form-control bh-close" aria-label="Closes">').val(v.close)));
+          $w.append($r);
+          $r.find('.bh-open, .bh-close').prop('disabled', !!v.closed);
+        });
+      }
+      $('#brHours').on('change', '.bh-closed', function () {
+        $(this).closest('.bh-row').find('.bh-open, .bh-close').prop('disabled', this.checked);
+      });
+
+      function openBranch(id) {
+        var b = id ? branches.filter(function (x) { return x.id === id; })[0] : null;
+        editingBranch = b;
+        var p = PawBookBiz.get(OWNER_ID);
+        $('#branchModalTitle').text(b ? 'Update branch' : 'Add branch');
+        $('#branchErr').addClass('d-none');
+        $('#brName').val(b ? b.name : ''); $('#brAddress').val(b ? b.address : '');
+        $('#brCity').val(b ? b.city : (p ? p.fields.bizCity : '')); $('#brPhone').val(b ? b.phone : (p ? p.fields.bizPhone : ''));
+        $('#brEmail').val(b ? b.email : (p ? p.fields.bizEmail : ''));
+        $('#brAccepting').prop('checked', b ? b.accepting : true);
+        buildBranchHours(b ? b.hours : (p ? p.hours : null));
+        branchModal.show();
+      }
+      $('#addBranchBtn').on('click', function () { openBranch(null); });
+
+      $('#branchForm').on('submit', function (e) {
+        e.preventDefault();
+        var name = $.trim($('#brName').val()), address = $.trim($('#brAddress').val()), city = $.trim($('#brCity').val()),
+            phone = $.trim($('#brPhone').val()), email = $.trim($('#brEmail').val()), err = '';
+        if (!name || !address || !city || !phone) err = 'Branch name, address, city and phone are required.';
+        else if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) err = 'Enter a valid email address.';
+        var hours = {}, anyOpen = false;
+        $('.bh-row').each(function () {
+          var day = $(this).attr('data-day'), closed = $(this).find('.bh-closed').is(':checked');
+          var o = $(this).find('.bh-open').val(), c = $(this).find('.bh-close').val();
+          if (!closed) { anyOpen = true; if (!err && (!o || !c || o >= c)) err = day + ': closing time must be after opening time.'; }
+          hours[day] = { closed: closed, open: o || '09:00', close: c || '18:00' };
+        });
+        if (!err && !anyOpen) err = 'Open on at least one day.';
+        if (err) { $('#branchErr').text(err).removeClass('d-none'); return; }
+
+        var data = { name: name, address: address, city: city, phone: phone, email: email, accepting: $('#brAccepting').is(':checked'), hours: hours };
+        if (editingBranch) { $.extend(editingBranch, data); }
+        else { data.id = Date.now(); branches.push(data); }
+        saveBranches(); renderBranches(); branchModal.hide();
+        toast('success', 'Branch ' + (editingBranch ? 'updated' : 'added') + '.');
+      });
+      renderBranches();
+
+  
+      var KEY = 'pawbook_bookings';
+      var bookings = readList(KEY);
+      function reloadBookings() { bookings = readList(KEY); }
+      function saveBookings() { localStorage.setItem(KEY, JSON.stringify(bookings)); }
+      function mine() { return bookings.filter(function (b) { return b.businessId === OWNER_ID; }); }
+      function startOf(b) { return parseDate(b.date).getTime() + parseTime(b.time) * 60000; }
+      function badge(st) {
+        var $b = $('<span class="badge"></span>').text(st);
+        if (st === 'Confirmed' || st === 'Completed') $b.addClass('bg-dark');
+        else if (st === 'Pending') $b.addClass('bg-secondary');
+        else $b.addClass('bg-light text-dark border');
+        return $b;
+      }
+      function find(ref) { return bookings.filter(function (b) { return b.ref === ref; })[0]; }
+      function setStatus(ref, st, msg) {
+        var b = find(ref); if (!b) return;
+        b.status = st; saveBookings(); renderBookings(); toast('success', msg);
+      }
+      function rank(b) { return b.status === 'Pending' ? 0 : (b.status === 'Confirmed' ? 1 : 2); }
+
+      function renderBookings() {
+        reloadBookings();
+        var all = mine(), f = $('#bookingFilter').val();
+        var pending = all.filter(function (b) { return b.status === 'Pending' && startOf(b) >= Date.now(); }).length;
+        $('#pendingBadge').text(pending).toggleClass('d-none', pending === 0);
+        var list = all.filter(function (b) {
+          if (f === 'all') return true;
+          if (f === 'Closed') return b.status === 'Cancelled' || b.status === 'Rejected';
+          return b.status === f;
+        }).sort(function (a, b) { return rank(a) - rank(b) || (rank(a) < 2 ? startOf(a) - startOf(b) : startOf(b) - startOf(a)); });
+
+        var $t = $('#bookingRows').empty();
+        list.forEach(function (b) {
+          var past = startOf(b) < Date.now();
+          var $tr = $('<tr></tr>');
+          $tr.append($('<td class="small"></td>').append($('<div></div>').text(fmtDate(b.date) + ' · ' + b.time)).append($('<div class="text-muted"></div>').text(b.ref)));
+          $tr.append($('<td class="small"></td>').text((b.customer && b.customer.name) || 'Customer'));
+          $tr.append($('<td class="small"></td>').text(b.pet || '—'));
+          $tr.append($('<td class="small"></td>').text((b.services || []).join(', ')));
+          $tr.append($('<td class="small"></td>').text('₱' + Number(b.total || 0).toLocaleString()));
+          $tr.append($('<td></td>').append(badge(past && b.status === 'Pending' ? 'Expired' : b.status)));
+
+          var $a = $('<div class="d-flex flex-wrap gap-2 justify-content-end"></div>');
+          function btn(label, cls, fn) { $a.append($('<button type="button" class="btn btn-sm"></button>').addClass(cls).text(label).on('click', fn)); }
+          if (b.status === 'Pending' && !past) {
+            btn('ACCEPT', 'btn-dark', function () { setStatus(b.ref, 'Confirmed', 'Booking ' + b.ref + ' accepted.'); });
+            btn('REJECT', 'btn-outline-dark', function () { if (window.confirm('Reject this booking?')) setStatus(b.ref, 'Rejected', 'Booking ' + b.ref + ' rejected.'); });
+            btn('RESCHEDULE', 'btn-outline-dark', function () { openResched(b.ref); });
+          } else if (b.status === 'Pending') {
+            btn('REJECT', 'btn-outline-dark', function () { setStatus(b.ref, 'Rejected', 'Booking ' + b.ref + ' rejected.'); });
+          } else if (b.status === 'Confirmed') {
+            btn('COMPLETE', 'btn-dark', function () { setStatus(b.ref, 'Completed', 'Booking ' + b.ref + ' marked as completed.'); });
+            if (!past) btn('RESCHEDULE', 'btn-outline-dark', function () { openResched(b.ref); });
+          }
+          $tr.append($('<td class="text-end"></td>').append($a));
+          $t.append($tr);
+        });
+        $('#bookingEmpty').toggleClass('d-none', list.length > 0);
+      }
+      $('#bookingFilter').on('change', renderBookings);
+
+      
+      var reschedModal = new bootstrap.Modal(document.getElementById('reschedModal'));
+      var rescheduling = null;
+      function fillTimes() {
+        var date = $('#rsDate').val(), $s = $('#rsTime').empty(), $h = $('#rsHint');
+        if (!date) { $h.text('Choose a date.'); return; }
+        var h = (PawBookBiz.get(OWNER_ID).hours || {})[DAYS[(parseDate(date).getDay() + 6) % 7]];
+        if (!h || h.closed) { $h.text('You are closed on this day. Pick another date.'); return; }
+        var now = new Date(), nowMin = date === isoDate(now) ? now.getHours() * 60 + now.getMinutes() : -1;
+        var cur = parseTime(rescheduling.time), n = 0;
+        for (var t = toMin(h.open); t < toMin(h.close); t += 30) {
+          if (t <= nowMin) continue;
+          $s.append($('<option></option>').val(t).text(to12h(t)).prop('selected', date === rescheduling.date && t === cur)); n++;
+        }
+        $h.text(n ? 'Open ' + clock(h.open) + '–' + clock(h.close) + '.' : 'No times left on this day.');
+      }
+      function openResched(ref) {
+        rescheduling = find(ref); if (!rescheduling) return;
+        var today = new Date(), max = new Date(today); max.setDate(max.getDate() + 90);
+        $('#reschedInfo').text((rescheduling.customer && rescheduling.customer.name || 'Customer') + ' · ' + (rescheduling.pet || '') + ' · now ' + fmtDate(rescheduling.date) + ' at ' + rescheduling.time);
+        $('#reschedErr').addClass('d-none');
+        $('#rsDate').attr({ min: isoDate(today), max: isoDate(max) }).val(rescheduling.date >= isoDate(today) ? rescheduling.date : isoDate(today));
+        fillTimes(); reschedModal.show();
+      }
+      $('#rsDate').on('change', fillTimes);
+      $('#reschedForm').on('submit', function (e) {
+        e.preventDefault();
+        if (!$('#rsDate').val() || !$('#rsTime').val()) { $('#reschedErr').text('Choose an available date and time.').removeClass('d-none'); return; }
+        rescheduling.date = $('#rsDate').val();
+        rescheduling.time = to12h(+$('#rsTime').val());
+        rescheduling.status = 'Confirmed';           // the shop picked the new time
+        saveBookings(); renderBookings(); reschedModal.hide();
+        toast('success', 'Booking ' + rescheduling.ref + ' moved to ' + fmtDate(rescheduling.date) + ' at ' + rescheduling.time + '.');
+      });
+      renderBookings();
+      $(window).on('storage', renderBookings);
+
+      
+      var PKEY = 'pawbook_posts';
+      function allPosts() { return readList(PKEY); }
+      function ago(ts) {
+        var m = Math.floor((Date.now() - ts) / 60000);
+        if (m < 1) return 'Just now'; if (m < 60) return m + ' min ago';
+        var h = Math.floor(m / 60); if (h < 24) return h + ' hr ago';
+        var d = Math.floor(h / 24); return d === 1 ? 'Yesterday' : d + ' days ago';
+      }
+      function renderPosts() {
+        var mineP = allPosts().filter(function (p) { return p.businessId === OWNER_ID; });
+        var $w = $('#myPosts').empty();
+        mineP.forEach(function (p) {
+          var $body = $('<div class="card-body"></div>');
+          $body.append($('<div class="d-flex justify-content-between align-items-start gap-2 mb-2"></div>')
+            .append($('<div></div>').append($('<span class="badge bg-light text-dark border me-2"></span>').text(p.type || 'Update')).append($('<small class="text-muted"></small>').text(ago(p.ts))))
+            .append($('<button type="button" class="btn btn-outline-dark btn-sm">DELETE</button>').on('click', function () {
+              if (!window.confirm('Delete this post?')) return;
+              localStorage.setItem(PKEY, JSON.stringify(allPosts().filter(function (x) { return x.id !== p.id; })));
+              renderPosts(); toast('success', 'Post deleted.');
+            })));
+          if (p.title) $body.append($('<h3 class="h6 fw-bold"></h3>').text(p.title));
+          $body.append($('<p class="small mb-1" style="white-space:pre-wrap;"></p>').text(p.text));
+          $body.append($('<small class="text-muted"></small>').text('♥ ' + (p.likes || 0)));
+          $w.append($('<div class="card mb-3"></div>').append($body));
+        });
+        $('#noPosts').toggleClass('d-none', mineP.length > 0);
+      }
+      $('#postBody').on('input', function () { $('#postCount').text(this.value.length); });
+      $('#bizPostForm').on('submit', function (e) {
+        e.preventDefault();
+        var text = $.trim($('#postBody').val());
+        if (!text) { $('#postErr').text('Write a message before publishing.').removeClass('d-none'); return; }
+        $('#postErr').addClass('d-none');
+        var list = allPosts();
+        list.unshift({ id: Date.now(), author: bizName(), kind: 'Business', businessId: OWNER_ID, type: $('#postType').val(),
+                       title: $.trim($('#postTitle').val()), text: text, ts: Date.now(), likes: 0, liked: false });
+        localStorage.setItem(PKEY, JSON.stringify(list));
+        $('#bizPostForm')[0].reset(); $('#postCount').text('0');
+        renderPosts(); toast('success', 'Your post is live in the community feed.');
+      });
+      renderPosts();
+    });
+  </script>
+</body>
+</html>

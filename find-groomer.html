@@ -41,54 +41,44 @@
   <section class="container py-4">
     <div class="card">
       <div class="card-body">
-        <form>
+        <form id="filterForm">
         <div class="row g-2 align-items-end">
           <div class="col-lg-3 col-md-12">
-            <label class="form-label small">SEARCH</label>
-            <input type="text" class="form-control form-control-sm" placeholder="Name, service or keyword...">
+            <label class="form-label small" for="fgSearch">SEARCH</label>
+            <input type="text" class="form-control form-control-sm" id="fgSearch" placeholder="Name, service or keyword...">
           </div>
           <div class="col-6 col-lg-2">
-            <label class="form-label small">LOCATION</label>
-            <select class="form-select form-select-sm">
-              <option>All</option>
-              <option>Makati</option>
-              <option>Pasay</option>
-              <option>Pasig</option>
-              <option>Quezon City</option>
-              <option>Taguig</option>
+            <label class="form-label small" for="fgLocation">LOCATION</label>
+            <select class="form-select form-select-sm" id="fgLocation">
+              <option value="">All</option>
             </select>
           </div>
           <div class="col-6 col-lg-2">
-            <label class="form-label small">SERVICE</label>
-            <select class="form-select form-select-sm">
-              <option>All</option>
-              <option>Full Grooming</option>
-              <option>Bath & Dry</option>
-              <option>Nail Trim</option>
-              <option>De-shedding</option>
-              <option>Pet Pool</option>
+            <label class="form-label small" for="fgService">SERVICE</label>
+            <select class="form-select form-select-sm" id="fgService">
+              <option value="">All</option>
             </select>
           </div>
           <div class="col-6 col-lg-1">
-            <label class="form-label small">PRICE</label>
-            <select class="form-select form-select-sm">
-              <option>Any</option>
-              <option>₱</option>
-              <option>₱₱</option>
-              <option>₱₱₱</option>
+            <label class="form-label small" for="fgPrice">PRICE</label>
+            <select class="form-select form-select-sm" id="fgPrice">
+              <option value="">Any</option>
+              <option value="1">₱</option>
+              <option value="2">₱₱</option>
+              <option value="3">₱₱₱</option>
             </select>
           </div>
           <div class="col-6 col-lg-2">
-            <label class="form-label small">RATING</label>
-            <select class="form-select form-select-sm">
-              <option>Any</option>
-              <option>★ 4+</option>
-              <option>★ 4.5+</option>
-              <option>★ 4.8+</option>
+            <label class="form-label small" for="fgRating">RATING</label>
+            <select class="form-select form-select-sm" id="fgRating">
+              <option value="">Any</option>
+              <option value="4">★ 4+</option>
+              <option value="4.5">★ 4.5+</option>
+              <option value="4.8">★ 4.8+</option>
             </select>
           </div>
           <div class="col-12 col-lg-2 d-flex gap-2">
-            <button type="button" class="btn btn-dark btn-sm flex-fill">APPLY</button>
+            <button type="submit" class="btn btn-dark btn-sm flex-fill">APPLY</button>
             <button type="reset" class="btn btn-outline-dark btn-sm flex-fill">CLEAR</button>
           </div>
         </div>
@@ -105,283 +95,23 @@
   <section class="container pb-4">
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <p class="small mb-0"><b>8</b> groomers found</p>
+      <p class="small mb-0" id="resultCount" aria-live="polite"></p>
       <div class="d-flex gap-2">
-        <select class="form-select form-select-sm" style="width:auto">
-          <option>Sort: Top rated</option>
-          <option>Sort: Most reviews</option>
-          <option>Sort: Price, low to high</option>
-          <option>Sort: Name A-Z</option>
+        <select class="form-select form-select-sm" style="width:auto" id="fgSort" aria-label="Sort results">
+          <option value="rating">Sort: Top rated</option>
+          <option value="reviews">Sort: Most reviews</option>
+          <option value="price">Sort: Price, low to high</option>
+          <option value="name">Sort: Name A-Z</option>
         </select>
       </div>
     </div>
 
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-3">
-          <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height:140px;">
-            <small class="text-muted">[Image]</small>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title h6 mb-1">Grooming Business 1</h5>
-              <span class="badge bg-dark">Open</span>
-            </div>
-            <p class="small mb-1">★ 5 <span class="text-muted">(123 reviews)</span></p>
-            <p class="small text-muted mb-2">Sector 04, Metro Manila · 9AM–6PM</p>
-            <div class="d-flex flex-wrap gap-1 mb-3">
-              <span class="badge bg-light text-dark border">Full Grooming</span>
-              <span class="badge bg-light text-dark border">Bath & Dry</span>
-              <span class="badge bg-light text-dark border">Nail Trim</span>
-              <span class="badge bg-light text-dark border">De-shedding</span>
-            </div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <span class="small">₱123 - ₱456</span>
-              <div class="d-flex gap-2">
-                <a href="business-profile.html?id=1" class="btn btn-outline-dark btn-sm">VIEW PROFILE</a>
-                <a href="book-appointment.html" class="btn btn-dark btn-sm">BOOK</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="groomerList"></div>
 
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-3">
-          <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height:140px;">
-            <small class="text-muted">[Image]</small>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title h6 mb-1">Grooming Business 2</h5>
-              <span class="badge bg-secondary">Closed</span>
-            </div>
-            <p class="small mb-1">★ 5 <span class="text-muted">(123 reviews)</span></p>
-            <p class="small text-muted mb-2">Katipunan, Quezon City · 9AM–5PM</p>
-            <div class="d-flex flex-wrap gap-1 mb-3">
-              <span class="badge bg-light text-dark border">Full Grooming</span>
-              <span class="badge bg-light text-dark border">Bath & Dry</span>
-              <span class="badge bg-light text-dark border">Pet Pool</span>
-            </div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <span class="small">₱123 - ₱456</span>
-              <div class="d-flex gap-2">
-                <a href="business-profile.html?id=4" class="btn btn-outline-dark btn-sm">VIEW PROFILE</a>
-                <a href="book-appointment.html" class="btn btn-dark btn-sm">BOOK</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="text-center py-5 d-none" id="noResults">
+      <p class="mb-1 fw-bold">No groomers match your filters</p>
+      <p class="small text-muted mb-0">Try clearing a filter or searching for something else.</p>
     </div>
-
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-3">
-          <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height:140px;">
-            <small class="text-muted">[Image]</small>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title h6 mb-1">Grooming Business 3</h5>
-              <span class="badge bg-dark">Open</span>
-            </div>
-            <p class="small mb-1">★ 5 <span class="text-muted">(123 reviews)</span></p>
-            <p class="small text-muted mb-2">Poblacion, Makati · 10AM–7PM</p>
-            <div class="d-flex flex-wrap gap-1 mb-3">
-              <span class="badge bg-light text-dark border">Full Grooming</span>
-              <span class="badge bg-light text-dark border">Bath & Dry</span>
-              <span class="badge bg-light text-dark border">Nail Trim</span>
-            </div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <span class="small">₱123 - ₱456</span>
-              <div class="d-flex gap-2">
-                <a href="business-profile.html?id=2" class="btn btn-outline-dark btn-sm">VIEW PROFILE</a>
-                <a href="book-appointment.html" class="btn btn-dark btn-sm">BOOK</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-3">
-          <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height:140px;">
-            <small class="text-muted">[Image]</small>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title h6 mb-1">Grooming Business 4</h5>
-              <span class="badge bg-dark">Open</span>
-            </div>
-            <p class="small mb-1">★ 5 <span class="text-muted">(123 reviews)</span></p>
-            <p class="small text-muted mb-2">BGC, Taguig · 9AM–7PM</p>
-            <div class="d-flex flex-wrap gap-1 mb-3">
-              <span class="badge bg-light text-dark border">Full Grooming</span>
-              <span class="badge bg-light text-dark border">De-shedding</span>
-              <span class="badge bg-light text-dark border">Pet Pool</span>
-              <span class="badge bg-light text-dark border">Nail Trim</span>
-            </div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <span class="small">₱123 - ₱456</span>
-              <div class="d-flex gap-2">
-                <a href="business-profile.html" class="btn btn-outline-dark btn-sm">VIEW PROFILE</a>
-                <a href="book-appointment.html" class="btn btn-dark btn-sm">BOOK</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-3">
-          <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height:140px;">
-            <small class="text-muted">[Image]</small>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title h6 mb-1">Grooming Business 5</h5>
-              <span class="badge bg-dark">Open</span>
-            </div>
-            <p class="small mb-1">★ 5 <span class="text-muted">(123 reviews)</span></p>
-            <p class="small text-muted mb-2">Roxas Blvd, Pasay · 8AM–6PM</p>
-            <div class="d-flex flex-wrap gap-1 mb-3">
-              <span class="badge bg-light text-dark border">Full Grooming</span>
-              <span class="badge bg-light text-dark border">De-shedding</span>
-              <span class="badge bg-light text-dark border">Bath & Dry</span>
-            </div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <span class="small">₱123 - ₱456</span>
-              <div class="d-flex gap-2">
-                <a href="business-profile.html?id=3" class="btn btn-outline-dark btn-sm">VIEW PROFILE</a>
-                <a href="book-appointment.html" class="btn btn-dark btn-sm">BOOK</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-3">
-          <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height:140px;">
-            <small class="text-muted">[Image]</small>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title h6 mb-1">Grooming Business 6</h5>
-              <span class="badge bg-dark">Open</span>
-            </div>
-            <p class="small mb-1">★ 5 <span class="text-muted">(123 reviews)</span></p>
-            <p class="small text-muted mb-2">North Ave, Quezon City · 9AM–6PM</p>
-            <div class="d-flex flex-wrap gap-1 mb-3">
-              <span class="badge bg-light text-dark border">Nail Trim</span>
-              <span class="badge bg-light text-dark border">Bath & Dry</span>
-              <span class="badge bg-light text-dark border">Full Grooming</span>
-              <span class="badge bg-light text-dark border">Pet Pool</span>
-            </div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <span class="small">₱123 - ₱456</span>
-              <div class="d-flex gap-2">
-                <a href="business-profile.html" class="btn btn-outline-dark btn-sm">VIEW PROFILE</a>
-                <a href="book-appointment.html" class="btn btn-dark btn-sm">BOOK</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-3">
-          <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height:140px;">
-            <small class="text-muted">[Image]</small>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title h6 mb-1">Grooming Business 7</h5>
-              <span class="badge bg-dark">Open</span>
-            </div>
-            <p class="small mb-1">★ 5 <span class="text-muted">(123 reviews)</span></p>
-            <p class="small text-muted mb-2">Legazpi Village, Makati · 10AM–8PM</p>
-            <div class="d-flex flex-wrap gap-1 mb-3">
-              <span class="badge bg-light text-dark border">Full Grooming</span>
-              <span class="badge bg-light text-dark border">Bath & Dry</span>
-            </div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <span class="small">₱123 - ₱456</span>
-              <div class="d-flex gap-2">
-                <a href="business-profile.html" class="btn btn-outline-dark btn-sm">VIEW PROFILE</a>
-                <a href="book-appointment.html" class="btn btn-dark btn-sm">BOOK</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-3">
-          <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height:140px;">
-            <small class="text-muted">[Image]</small>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-              <h5 class="card-title h6 mb-1">Grooming Business 8</h5>
-              <span class="badge bg-secondary">Closed</span>
-            </div>
-            <p class="small mb-1">★ 5 <span class="text-muted">(123 reviews)</span></p>
-            <p class="small text-muted mb-2">Kapitolyo, Pasig · 10AM–6PM</p>
-            <div class="d-flex flex-wrap gap-1 mb-3">
-              <span class="badge bg-light text-dark border">Bath & Dry</span>
-              <span class="badge bg-light text-dark border">Nail Trim</span>
-            </div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <span class="small">₱123 - ₱456</span>
-              <div class="d-flex gap-2">
-                <a href="business-profile.html" class="btn btn-outline-dark btn-sm">VIEW PROFILE</a>
-                <a href="book-appointment.html" class="btn btn-dark btn-sm">BOOK</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <nav class="mt-4 d-flex justify-content-center">
-      <ul class="pagination pagination-sm">
-        <li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
 
   </section>
 
@@ -400,6 +130,112 @@
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/businesses-data.js"></script>
+  <script>
+    $(function () {
+
+      var businesses = PawBookBiz.all();
+
+      PawBookBiz.cities().forEach(function (c) { $('#fgLocation').append($('<option></option>').val(c).text(c)); });
+      PawBookBiz.serviceNames().forEach(function (n) { $('#fgService').append($('<option></option>').val(n).text(n)); });
+
+      
+      var params = new URLSearchParams(window.location.search);
+      $('#fgSearch').val(params.get('q') || '');
+      $('#fgLocation').val(params.get('location') || '');
+      $('#fgService').val(params.get('service') || '');
+      $('#fgPrice').val(params.get('price') || '');
+      $('#fgRating').val(params.get('rating') || '');
+      if ($('#fgLocation').val() === null) $('#fgLocation').val('');
+      if ($('#fgService').val() === null) $('#fgService').val('');
+
+      function filters() {
+        return {
+          q: $('#fgSearch').val().trim().toLowerCase(),
+          location: $('#fgLocation').val(),
+          service: $('#fgService').val(),
+          price: $('#fgPrice').val(),
+          rating: $('#fgRating').val(),
+          open: $('#open').is(':checked')
+        };
+      }
+
+      function matches(b, f) {
+        var fl = b.fields;
+        if (f.q) {
+          var hay = [fl.bizName, fl.bizType, fl.bizTagline, fl.bizCity, fl.bizAddress]
+            .concat((b.services || []).map(function (s) { return s.name; })).join(' ').toLowerCase();
+          var ok = f.q.split(/\s+/).every(function (w) { return hay.indexOf(w) !== -1; });
+          if (!ok) return false;
+        }
+        if (f.location && fl.bizCity !== f.location) return false;
+        if (f.service && !(b.services || []).some(function (s) { return s.name === f.service; })) return false;
+        if (f.price && PawBookBiz.priceTier(b) !== +f.price) return false;
+        if (f.rating && (!b.rating || b.rating.score < +f.rating)) return false;
+        if (f.open && !PawBookBiz.isOpenNow(b)) return false;
+        return true;
+      }
+
+      function minPrice(b) { var r = PawBookBiz.priceRange(b); return r ? r.min : Infinity; }
+      var SORTS = {
+        rating:  function (a, b) { return ((b.rating || {}).score || 0) - ((a.rating || {}).score || 0); },
+        reviews: function (a, b) { return ((b.rating || {}).count || 0) - ((a.rating || {}).count || 0); },
+        price:   function (a, b) { return minPrice(a) - minPrice(b); },
+        name:    function (a, b) { return a.fields.bizName.localeCompare(b.fields.bizName); }
+      };
+
+      function badge(text) { return $('<span class="badge bg-light text-dark border"></span>').text(text); }
+
+      function card(b) {
+        var fl = b.fields, open = PawBookBiz.isOpenNow(b), range = PawBookBiz.priceRange(b);
+
+        var $top = $('<div class="d-flex justify-content-between align-items-start"></div>');
+        $top.append($('<h5 class="card-title h6 mb-1"></h5>').text(fl.bizName));
+        $top.append($('<span class="badge"></span>').addClass(open ? 'bg-dark' : 'bg-secondary').text(open ? 'Open' : 'Closed'));
+
+        var $body = $('<div class="card-body"></div>').append($top);
+        if (b.rating) {
+          $body.append($('<p class="small mb-1"></p>').text('★ ' + b.rating.score + ' ')
+            .append($('<span class="text-muted"></span>').text('(' + b.rating.count + ' reviews)')));
+        }
+        $body.append($('<p class="small text-muted mb-2"></p>')
+          .text([fl.bizAddress, fl.bizCity].filter(Boolean).join(', ') + ' · ' + PawBookBiz.hoursLabel(b)));
+
+        var $badges = $('<div class="d-flex flex-wrap gap-1 mb-3"></div>');
+        (b.services || []).forEach(function (s) { $badges.append(badge(s.name)); });
+        $body.append($badges);
+
+        var $actions = $('<div class="d-flex gap-2"></div>')
+          .append($('<a class="btn btn-outline-dark btn-sm">VIEW PROFILE</a>').attr('href', 'business-profile.html?id=' + b.id))
+          .append($('<a class="btn btn-dark btn-sm">BOOK</a>').attr('href', 'book-appointment.html?id=' + b.id));
+        $body.append($('<div class="d-flex flex-wrap justify-content-between align-items-center gap-2"></div>')
+          .append($('<span class="small"></span>').text(range ? '₱' + range.min.toLocaleString() + ' - ₱' + range.max.toLocaleString() : ''))
+          .append($actions));
+
+        var $img = PawBookBiz.photo(b.image, 'fill', fl.bizName);
+        return $('<div class="card mb-3"></div>').append(
+          $('<div class="row g-0"></div>')
+            .append($('<div class="col-md-3"></div>').append($img))
+            .append($('<div class="col-md-9"></div>').append($body)));
+      }
+
+      function render() {
+        var f = filters();
+        var list = businesses.filter(function (b) { return matches(b, f); }).sort(SORTS[$('#fgSort').val()]);
+        var $l = $('#groomerList').empty();
+        list.forEach(function (b) { $l.append(card(b)); });
+        $('#resultCount').empty().append($('<b></b>').text(list.length)).append(' ' + (list.length === 1 ? 'groomer' : 'groomers') + ' found');
+        $('#noResults').toggleClass('d-none', list.length > 0);
+      }
+
+      $('#filterForm').on('submit', function (e) { e.preventDefault(); render(); });
+      $('#filterForm').on('reset', function () { setTimeout(render, 0); });
+      $('#fgLocation, #fgService, #fgPrice, #fgRating, #open, #fgSort').on('change', render);
+      $('#fgSearch').on('input', render);
+
+      render();
+    });
+  </script>
 
 </body>
 </html>

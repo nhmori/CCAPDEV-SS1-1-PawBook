@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawBook — My Pets</title>
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">PAWBOOK</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="find-groomer.html">BUSINESSES</a></li>
+          <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
+          <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
+          <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-light border-bottom">
+    <div class="container py-4 d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div>
+        <h1 class="h3 fw-bold mb-1">MY PETS</h1>
+        <p class="text-muted small mb-0">Keep your pets' grooming details here so groomers know what to expect.</p>
+      </div>
+      <button class="btn btn-dark" id="addPetBtn">+ ADD PET</button>
+    </div>
+  </section>
+
+  <section class="container py-4">
+    <ul class="nav nav-tabs mb-4" role="tablist">
+      <li class="nav-item"><a class="nav-link" href="my-dashboard.html">Bookings</a></li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pets-pane" type="button" role="tab">Pets</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#account-pane" type="button" role="tab">Account</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="pets-pane" role="tabpanel">
+        <div class="row g-3" id="petList"></div>
+        <div class="text-center py-5 d-none" id="emptyState">
+          <p class="mb-1 fw-bold">No pets yet</p>
+          <p class="small text-muted mb-3">Add your first pet so groomers know who's coming.</p>
+          <button class="btn btn-dark btn-sm" id="emptyAddBtn">+ ADD PET</button>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="account-pane" role="tabpanel">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h6 fw-bold mb-3">ACCOUNT DETAILS</h2>
+                <div class="alert alert-success d-none" id="accountMsg" role="status"></div>
+                <div class="alert alert-danger d-none" id="accountErr" role="alert"></div>
+                <form id="accountForm">
+                  <label class="form-label small" for="accName">NAME</label>
+                  <input type="text" class="form-control mb-3" id="accName" maxlength="60" required>
+
+                  <label class="form-label small" for="accEmail">EMAIL</label>
+                  <input type="email" class="form-control mb-3" id="accEmail" required>
+
+                  <label class="form-label small" for="accPassword">NEW PASSWORD</label>
+                  <input type="password" class="form-control" id="accPassword" minlength="8" placeholder="Leave blank to keep your current password" autocomplete="new-password">
+                  <div class="form-text mb-3">At least 8 characters.</div>
+
+                  <label class="form-label small" for="accPassword2">CONFIRM NEW PASSWORD</label>
+                  <input type="password" class="form-control mb-3" id="accPassword2" autocomplete="new-password">
+
+                  <button type="submit" class="btn btn-dark btn-sm">SAVE CHANGES</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal fade" id="petModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <form class="modal-content" id="petForm">
+          <div class="modal-header">
+            <h2 class="modal-title h5 fw-bold" id="petModalTitle">Add pet</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="petId">
+            <div class="rounded border overflow-hidden mb-3" id="petPhotoPreview"></div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label small" for="petName">NAME</label>
+                <input type="text" class="form-control" id="petName" maxlength="40" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small" for="petBreed">BREED</label>
+                <input type="text" class="form-control" id="petBreed" maxlength="40" placeholder="e.g. Shih Tzu, Mixed" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small" for="petAge">AGE (YEARS)</label>
+                <input type="number" class="form-control" id="petAge" min="0" max="40" step="0.5" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small" for="petSize">SIZE</label>
+                <select class="form-select" id="petSize" required>
+                  <option>Small</option>
+                  <option>Medium</option>
+                  <option>Large</option>
+                  <option>Giant</option>
+                </select>
+                <div class="form-text">Small: under 10 kg · Medium: 10–25 kg · Large: 25–45 kg · Giant: over 45 kg</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small" for="petGender">GENDER</label>
+                <select class="form-select" id="petGender" required>
+                  <option value="" disabled selected>Select gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label small" for="petHealth">ALLERGIES &amp; HEALTH CONDITIONS</label>
+                <input type="text" class="form-control" id="petHealth" maxlength="150" placeholder="e.g. Sensitive skin, allergic to fragrance">
+              </div>
+              <div class="col-12">
+                <label class="form-label small" for="petNotes">GROOMING NOTES</label>
+                <textarea class="form-control" id="petNotes" rows="3" maxlength="400" placeholder="Preferred cut, dislikes blow dryers, last groomed date..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">CANCEL</button>
+            <button type="submit" class="btn btn-dark btn-sm" id="petSaveBtn">SAVE CHANGES</button>
+          </div>
+        </form>
+    </div>
+  </div>
+
+  <footer class="border-top py-4 mt-5">
+    <div class="container d-flex justify-content-between">
+      <div>
+        <a href="#" class="text-decoration-none me-3">About</a>
+        <a href="#" class="text-decoration-none me-3">Contact</a>
+        <a href="#" class="text-decoration-none me-3">Privacy</a>
+        <a href="#" class="text-decoration-none">Terms</a>
+      </div>
+      <span class="text-muted">&copy; 2026 PawBook</span>
+    </div>
+  </footer>
+
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    $(function () {
+      
+      if (localStorage.getItem('pawbook_logged_in') !== 'true') {
+        window.location.href = 'login-signup.html';
+        return;
+      }
+
+      var KEY = 'pawbook_pets_v2';
+      
+      var PHOTO = {
+        Dalla:   'Dalla1.jpg',
+        Kiwi:    'Kiwi1.jpg',
+        Charlie: 'Charlie1.jpg'
+      };
+
+      
+      var SEED = [
+        { id: 1, name: 'Dalla',   breed: 'Mixed breed', age: 2, size: 'Medium', health: '', notes: '' },
+        { id: 2, name: 'Kiwi',    breed: 'Mixed breed', age: 2, size: 'Medium', health: '', notes: '' },
+        { id: 3, name: 'Charlie', breed: 'Mixed breed', age: 2, size: 'Medium', health: '', notes: '' }
+      ];
+
+      function load() {
+        try {
+          var d = JSON.parse(localStorage.getItem(KEY));
+          if (Array.isArray(d)) return d;
+        } catch (e) {}
+        save(SEED);
+        return SEED.slice();
+      }
+      function save(list) { localStorage.setItem(KEY, JSON.stringify(list)); }
+
+      var pets = load();
+      var modal = new bootstrap.Modal(document.getElementById('petModal'));
+
+      
+      function photoCandidates(src) {
+        var base = src.replace(/\.[^.\/]+$/, '');
+        var bases = [base];
+        if (base.toLowerCase() !== base) bases.push(base.toLowerCase());
+        var list = [src];
+        bases.forEach(function (b) {
+          ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'JPEG', 'PNG'].forEach(function (ext) {
+            var c = b + '.' + ext;
+            if (list.indexOf(c) === -1) list.push(c);
+          });
+        });
+        return list;
+      }
+
+      function photoFor(p) {
+        var name = String(p.name || '').trim().toLowerCase();
+        var key = Object.keys(PHOTO).filter(function (k) { return k.toLowerCase() === name; })[0];
+        return key ? PHOTO[key] : '';
+      }
+
+      function photo(p, height) {
+        var $box = $('<div class="bg-light d-flex align-items-center justify-content-center overflow-hidden"></div>').css('height', height);
+        function fallback(missing) {
+          var $c = $('<div class="text-center px-2"></div>').append('<div style="font-size:2.5rem;">🐾</div>');
+          if (missing) $c.append($('<small class="text-muted d-block"></small>').text("Can't find " + missing));
+          $box.empty().append($c);
+        }
+        var src = photoFor(p);
+        if (src) {
+          var tries = photoCandidates(src), i = 0;
+          var $img = $('<img>').attr({ src: tries[0], alt: (p.name || 'Pet') + ' photo' })
+            .css({ width: '100%', height: '100%', objectFit: 'cover' })
+            .on('error', function () {
+              i++;
+              if (i < tries.length) $img.attr('src', tries[i]); else fallback(src);
+            })
+            .appendTo($box);
+        } else {
+          fallback();
+        }
+        return $box;
+      }
+
+      function badge(text) {
+        return $('<span class="badge bg-light text-dark border"></span>').text(text);
+      }
+
+      function render() {
+        var $list = $('#petList').empty();
+        $('#emptyState').toggleClass('d-none', pets.length > 0);
+
+        pets.forEach(function (p) {
+          var $card = $('<div class="card h-100 overflow-hidden"></div>').append(photo(p, 180));
+          var $body = $('<div class="card-body d-flex flex-column"></div>');
+
+          var $head = $('<div class="mb-3"></div>');
+          $head.append($('<h2 class="h6 fw-bold mb-0"></h2>').text(p.name));
+          $head.append($('<small class="text-muted"></small>').text(p.breed));
+          $body.append($head);
+
+          var $badges = $('<div class="d-flex flex-wrap gap-1 mb-3"></div>');
+          if (p.gender) $badges.append(badge(p.gender));
+          $badges.append(badge(p.size));
+          $badges.append(badge(p.age + (Number(p.age) === 1 ? ' yr' : ' yrs')));
+          $body.append($badges);
+
+          if (p.health) $body.append($('<p class="small mb-1"></p>').append('<span class="text-muted">Health: </span>').append(document.createTextNode(p.health)));
+          if (p.notes) $body.append($('<p class="small mb-1"></p>').append('<span class="text-muted">Notes: </span>').append(document.createTextNode(p.notes)));
+
+          var $actions = $('<div class="d-flex gap-2 mt-auto pt-3"></div>');
+          $actions.append($('<button type="button" class="btn btn-outline-dark btn-sm flex-fill">VIEW</button>').on('click', function () { openForm(p.id); }));
+          $actions.append($('<button type="button" class="btn btn-dark btn-sm flex-fill">DELETE</button>').on('click', function () { removePet(p.id); }));
+          $body.append($actions);
+
+          $card.append($body);
+          $list.append($('<div class="col-md-6 col-lg-4"></div>').append($card));
+        });
+      }
+
+      function openForm(id) {
+        var p = pets.filter(function (x) { return x.id === id; })[0];
+        $('#petForm')[0].reset();
+        $('#petId').val(p ? p.id : '');
+        $('#petModalTitle').text(p ? p.name : 'Add pet');
+        $('#petSaveBtn').text(p ? 'SAVE CHANGES' : 'SAVE PET');
+        if (p) {
+          $('#petName').val(p.name);
+          $('#petBreed').val(p.breed);
+          $('#petAge').val(p.age);
+          $('#petSize').val(p.size);
+          $('#petGender').val(p.gender || '');
+          $('#petHealth').val(p.health);
+          $('#petNotes').val(p.notes);
+        }
+        $('#petPhotoPreview').empty().append(photo(p || {}, 200));
+        modal.show();
+      }
+
+      function removePet(id) {
+        var p = pets.filter(function (x) { return x.id === id; })[0];
+        if (!p || !confirm('Delete ' + p.name + '\'s profile? This can\'t be undone.')) return;
+        pets = pets.filter(function (x) { return x.id !== id; });
+        save(pets);
+        render();
+      }
+
+      $('#addPetBtn, #emptyAddBtn').on('click', function () { openForm(null); });
+
+      $('#petForm').on('submit', function (e) {
+        e.preventDefault();
+        var id = parseInt($('#petId').val(), 10);
+        var data = {
+          name: $('#petName').val().trim(),
+          breed: $('#petBreed').val().trim(),
+          age: parseFloat($('#petAge').val()),
+          size: $('#petSize').val(),
+          gender: $('#petGender').val(),
+          health: $('#petHealth').val().trim(),
+          notes: $('#petNotes').val().trim()
+        };
+        if (id) {
+          pets = pets.map(function (p) { return p.id === id ? $.extend({}, p, data) : p; });
+        } else {
+          var nextId = pets.reduce(function (m, p) { return Math.max(m, p.id); }, 0) + 1;
+          pets.push($.extend({ id: nextId }, data));
+        }
+        save(pets);
+        render();
+        modal.hide();
+      });
+
+      render();
+
+      
+      var ACC_KEY = 'pawbook_account';
+      var account = { name: 'Juan Dela Cruz', email: 'juan@example.com' };
+      try {
+        var savedAcc = JSON.parse(localStorage.getItem(ACC_KEY));
+        if (savedAcc && savedAcc.name && savedAcc.email) account = savedAcc;
+      } catch (e) {}
+      $('#accName').val(account.name);
+      $('#accEmail').val(account.email);
+
+      $('#accountForm').on('submit', function (e) {
+        e.preventDefault();
+        var pw = $('#accPassword').val(), pw2 = $('#accPassword2').val();
+        $('#accountMsg, #accountErr').addClass('d-none');
+        if (pw && pw !== pw2) {
+          $('#accountErr').text('The passwords do not match. Re-enter them and try again.').removeClass('d-none');
+          return;
+        }
+        account = { name: $('#accName').val().trim(), email: $('#accEmail').val().trim() };
+        localStorage.setItem(ACC_KEY, JSON.stringify(account));
+        $('#accPassword, #accPassword2').val('');
+        $('#accountMsg').text(pw ? 'Your name, email and password were updated.' : 'Your name and email were updated.').removeClass('d-none');
+      });
+    });
+  </script>
+
+  <script>
+    $(function () {
+      if (location.hash === '#account') {
+        var el = document.querySelector('[data-bs-target="#account-pane"]');
+        if (el) bootstrap.Tab.getOrCreateInstance(el).show();
+      }
+    });
+  </script>
+</body>
+</html>

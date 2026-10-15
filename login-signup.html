@@ -54,12 +54,23 @@
           <div class="tab-content">
 
             <div class="tab-pane fade show active" id="login">
-              <form action="my-dashboard.html">
+              <form action="index.html" novalidate>
+                <div id="loginMsg"></div>
+                <label class="form-label small d-block">LOG IN AS</label>
+                <div class="btn-group w-100 mb-3" role="group" aria-label="Account type">
+                  <input type="radio" class="btn-check" name="role" id="roleOwner" value="owner" autocomplete="off" checked>
+                  <label class="btn btn-outline-dark" for="roleOwner">Pet owner</label>
+                  <input type="radio" class="btn-check" name="role" id="roleBiz" value="business" autocomplete="off">
+                  <label class="btn btn-outline-dark" for="roleBiz">Business owner</label>
+                  <input type="radio" class="btn-check" name="role" id="roleAdmin" value="admin" autocomplete="off">
+                  <label class="btn btn-outline-dark" for="roleAdmin">Admin</label>
+                </div>
+
                 <label class="form-label small">EMAIL</label>
-                <input type="email" class="form-control mb-3" placeholder="you@example.com" required>
+                <input type="email" class="form-control mb-3" id="liEmail" placeholder="you@example.com" required>
 
                 <label class="form-label small">PASSWORD</label>
-                <input type="password" class="form-control mb-3" placeholder="Password" required>
+                <input type="password" class="form-control mb-3" id="liPass" placeholder="Password" required>
 
                 <a href="#" class="small text-decoration-none">Forgot password?</a>
 
@@ -68,24 +79,25 @@
             </div>
 
             <div class="tab-pane fade" id="signup">
-              <form action="login-signup.html">
+              <form action="login-signup.html" id="signupForm" novalidate>
+                <div id="signupMsg"></div>
                 <label class="form-label small">I AM A</label>
-                <select class="form-select mb-3">
-                  <option>Pet owner</option>
-                  <option>Grooming business</option>
+                <select class="form-select mb-3" id="suRole">
+                  <option value="owner">Pet owner</option>
+                  <option value="business">Grooming business</option>
                 </select>
 
                 <label class="form-label small">NAME</label>
-                <input type="text" class="form-control mb-3" placeholder="Full name or business name" required>
+                <input type="text" class="form-control mb-3" id="suName" placeholder="Full name or business name" required>
 
                 <label class="form-label small">EMAIL</label>
-                <input type="email" class="form-control mb-3" placeholder="you@example.com" required>
+                <input type="email" class="form-control mb-3" id="suEmail" placeholder="you@example.com" required>
 
                 <label class="form-label small">PASSWORD</label>
-                <input type="password" class="form-control mb-3" placeholder="Min. 8 characters" minlength="8" required>
+                <input type="password" class="form-control mb-3" id="suPass" placeholder="Min. 8 characters" minlength="8" required>
 
                 <label class="form-label small">CONFIRM PASSWORD</label>
-                <input type="password" class="form-control mb-3" placeholder="Re-enter password" required>
+                <input type="password" class="form-control mb-3" id="suPass2" placeholder="Re-enter password" required>
 
                 <button type="submit" class="btn btn-dark w-100 mt-2">CREATE ACCOUNT</button>
               </form>

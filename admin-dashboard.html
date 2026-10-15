@@ -32,7 +32,11 @@
   </nav>
 
   <section class="container py-4">
-    <h1 class="h4 fw-bold mb-4">Admin Dashboard</h1>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+      <h1 class="h4 fw-bold mb-0">Admin Dashboard</h1>
+      <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#adminModal">+ CREATE ADMIN ACCOUNT</button>
+    </div>
+    <div id="adminAlert"></div>
 
     <div class="row g-3 mb-4">
       <div class="col-6 col-md-3">
@@ -81,6 +85,9 @@
       </li>
       <li class="nav-item" role="presentation">
         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reports-pane" type="button">Reports</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#admins-pane" type="button">Admins</button>
       </li>
     </ul>
 
@@ -198,6 +205,22 @@
         </div>
       </div>
 
+      <div class="tab-pane fade" id="admins-pane" role="tabpanel">
+        <h2 class="h6 fw-bold mb-3">ADMIN ACCOUNTS</h2>
+        <div class="table-responsive mb-4">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th class="small text-muted">NAME</th>
+                <th class="small text-muted">EMAIL</th>
+                <th class="small text-muted">CREATED</th>
+              </tr>
+            </thead>
+            <tbody id="adminRows"></tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="tab-pane fade" id="reports-pane" role="tabpanel">
         <h2 class="h6 fw-bold mb-3">REPORTS</h2>
         <div class="table-responsive mb-4">
@@ -260,6 +283,32 @@
     </div>
   </section>
 
+  <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="adminForm" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title h5 fw-bold" id="adminModalTitle">Create admin account</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger small d-none" id="adminErr" role="alert"></div>
+          <label class="form-label small" for="adName">NAME</label>
+          <input type="text" class="form-control mb-3" id="adName" required>
+          <label class="form-label small" for="adEmail">EMAIL</label>
+          <input type="email" class="form-control mb-3" id="adEmail" placeholder="admin@example.com" required>
+          <label class="form-label small" for="adPass">PASSWORD</label>
+          <input type="password" class="form-control mb-3" id="adPass" placeholder="Min. 8 characters" required>
+          <label class="form-label small" for="adPass2">CONFIRM PASSWORD</label>
+          <input type="password" class="form-control" id="adPass2" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">CANCEL</button>
+          <button type="submit" class="btn btn-dark btn-sm">CREATE ADMIN</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <footer class="border-top py-4 mt-5">
     <div class="container d-flex justify-content-between">
       <div>
@@ -277,6 +326,56 @@
   <script src="js/mock-data.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    $(function () {
+      // Admins only
+      var ok = false;
+      try { ok = localStorage.getItem('pawbook_logged_in') === 'true' && localStorage.getItem('pawbook_role') === 'admin'; } catch (e) {}
+      if (!ok) { window.location.href = 'login-signup.html'; return; }
+
+      var KEY = 'pawbook_users';
+      function users() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+      function fmt(ts) { return ts ? new Date(ts).toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Built-in'; }
+
+      function renderAdmins() {
+        var $b = $('#adminRows').empty();
+        var list = [{ name: 'PawBook Admin', email: 'admin@pawbook.com', created: 0 }]
+          .concat(users().filter(function (u) { return u.role === 'admin'; }));
+        list.forEach(function (u) {
+          $b.append($('<tr></tr>')
+            .append($('<td class="small"></td>').text(u.name))
+            .append($('<td class="small"></td>').text(u.email))
+            .append($('<td class="small"></td>').text(fmt(u.created))));
+        });
+      }
+      renderAdmins();
+
+      $('#adminModal').on('show.bs.modal', function () {
+        $('#adminForm')[0].reset(); $('#adminErr').addClass('d-none');
+      });
+
+      $('#adminForm').on('submit', function (e) {
+        e.preventDefault();
+        var name = $.trim($('#adName').val()), email = $.trim($('#adEmail').val()).toLowerCase(),
+            p1 = $('#adPass').val(), p2 = $('#adPass2').val(), err = '';
+        if (!name) err = 'Enter a name.';
+        else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) err = 'Enter a valid email address.';
+        else if (p1.length < 8) err = 'Password must be at least 8 characters.';
+        else if (p1 !== p2) err = 'Passwords do not match.';
+        else if (email === 'admin@pawbook.com' || users().some(function (u) { return u.email === email; })) err = 'An account with that email already exists.';
+        if (err) { $('#adminErr').text(err).removeClass('d-none'); return; }
+
+        var list = users();
+        list.push({ name: name, email: email, password: p1, role: 'admin', created: Date.now() });
+        localStorage.setItem(KEY, JSON.stringify(list));
+        bootstrap.Modal.getInstance(document.getElementById('adminModal')).hide();
+        renderAdmins();
+        $('#adminAlert').html('<div class="alert alert-success small alert-dismissible" role="alert"></div>');
+        $('#adminAlert .alert').text('Admin account created for ' + name + ' (' + email + ').')
+          .append('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>');
+      });
+    });
+  </script>
 
 </body>
 </html>

@@ -27,7 +27,7 @@ function drawCharts() {
     }
   });
 
-  // SHOP DASHBOARD CHARTS
+
 
   // chart 1: popular services
   if (has('popularServicesChart')) {
@@ -53,7 +53,7 @@ function drawCharts() {
     });
   }
 
-  // chart 2: average customer ratings
+
   if (has('ratingsChart')) {
     new Chart(has('ratingsChart'), {
       type: 'line',
@@ -83,7 +83,7 @@ function drawCharts() {
     });
   }
 
-  // chart 3: percentage of bookings
+
   if (has('serviceBreakdownChart')) {
     new Chart(has('serviceBreakdownChart'), {
       type: 'doughnut',
@@ -106,9 +106,9 @@ function drawCharts() {
     });
   }
 
-  // CUSTOMER DASHBOARD CHART
 
-  // chart 4: my bookings per month
+
+
   if (has('customerBookingsChart')) {
     new Chart(has('customerBookingsChart'), {
       type: 'bar',
@@ -132,9 +132,9 @@ function drawCharts() {
     });
   }
 
-  // ADMIN DASHBOARD CHART
 
-  // chart 5: user growth
+
+
   if (has('userGrowthChart')) {
     new Chart(has('userGrowthChart'), {
       type: 'line',
@@ -160,7 +160,7 @@ function drawCharts() {
     });
   }
 
-  // chart 6: bookings per day
+
   if (has('bookingsPerDayChart')) {
     new Chart(has('bookingsPerDayChart'), {
       type: 'bar',
@@ -184,7 +184,7 @@ function drawCharts() {
     });
   }
 
-  // chart 7: top cities
+
   if (has('topCitiesChart')) {
     new Chart(has('topCitiesChart'), {
       type: 'doughnut',

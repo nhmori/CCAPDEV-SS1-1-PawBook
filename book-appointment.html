@@ -50,8 +50,9 @@
             <div class="card-body">
               <h2 class="h6 fw-bold mb-3">1. CHOOSE SERVICES</h2>
               <div class="mb-3">
-                <label class="form-label small" for="bizSelect">BUSINESS</label>
-                <select class="form-select" id="bizSelect"></select>
+                <div class="small text-muted">BOOKING AT</div>
+                <div class="fw-bold" id="bizName"></div>
+                <div class="small text-muted" id="bizPlace"></div>
               </div>
               <label class="form-label small d-block">SERVICES (SELECT ONE OR MORE)</label>
               <div id="serviceList" class="list-group"></div>
@@ -235,12 +236,22 @@
         return;
       }
 
-      var pets = (typeof mockCustomerPets !== 'undefined') ? mockCustomerPets : [
-        { name: 'Buddy', breed: 'Labrador' }, { name: 'Ming', breed: 'Persian' }, { name: 'Max', breed: 'Shih Tzu' }
-      ];
+      
+      var pets = [];
+      var rawPets = localStorage.getItem('pawbook_pets_v2');
+      if (rawPets !== null) {
+        try { pets = JSON.parse(rawPets) || []; } catch (e) { pets = []; }
+      } else if (typeof mockCustomerPets !== 'undefined') {
+        pets = mockCustomerPets;
+      }
 
       var params = new URLSearchParams(window.location.search);
-      var bizId = parseInt(params.get('id'), 10) || 1;
+      var bizId = parseInt(params.get('id'), 10);
+      if (!bizId || !mockBusinesses.some(function (b) { return b.id === bizId; })) {
+        // Opened without a business (for example by typing the address): go pick one first
+        window.location.replace('find-groomer.html');
+        return;
+      }
       var biz = null, data = null;
 
       function money(n) { return '₱' + Number(n).toLocaleString(); }
@@ -266,7 +277,7 @@
       }
 
       function loadBusiness(id) {
-        biz = mockBusinesses.filter(function (b) { return b.id === id; })[0] || mockBusinesses[0];
+        biz = mockBusinesses.filter(function (b) { return b.id === id; })[0];
         bizId = biz.id;
         data = { fields: biz.fields, services: biz.services, hours: biz.hours };
         if (biz.id === OWNER_ID) {
@@ -275,7 +286,9 @@
             if (saved && saved.fields && saved.fields.bizName) data = saved;
           } catch (e) {}
         }
-        $('#bizSelect').val(bizId);
+        $('#bizName').text(data.fields.bizName);
+        $('#bizPlace').text([data.fields.bizAddress, data.fields.bizCity].filter(Boolean).join(', '));
+        document.title = 'PawBook — Book ' + data.fields.bizName;
         $('#backLink, #cancelLink').attr('href', 'business-profile.html?id=' + bizId);
         $('#sumBiz').text(data.fields.bizName);
         $('#sumLocation').text([data.fields.bizAddress, data.fields.bizCity].filter(Boolean).join(', '));
@@ -283,10 +296,6 @@
         buildServices(); buildSlots(); updateSummary();
       }
 
-      mockBusinesses.forEach(function (b) {
-        $('#bizSelect').append($('<option></option>').val(b.id).text(b.fields.bizName + ' — ' + b.fields.bizCity));
-      });
-      $('#bizSelect').on('change', function () { loadBusiness(parseInt($(this).val(), 10)); });
 
       function buildServices() {
         var $l = $('#serviceList').empty();

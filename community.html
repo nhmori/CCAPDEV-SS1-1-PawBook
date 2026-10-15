@@ -63,15 +63,18 @@
 
       <div class="card mb-3">
         <div class="card-body">
-          <form>
-            <textarea class="form-control mb-2" rows="3" placeholder="What's on your mind?"></textarea>
+          <form id="postForm">
+            <textarea class="form-control mb-2" id="postText" rows="3" maxlength="500" placeholder="What's on your mind?"></textarea>
+            <div class="alert d-none py-2 small" id="postMsg" role="status"></div>
             <div class="d-flex justify-content-between">
               <button type="button" class="btn btn-outline-dark btn-sm">+ PHOTO</button>
-              <button type="button" class="btn btn-dark btn-sm">POST</button>
+              <button type="submit" class="btn btn-dark btn-sm" id="postBtn">POST</button>
             </div>
           </form>
         </div>
       </div>
+
+      <div id="newPosts"></div>
 
       <div class="card mb-3">
         <div class="card-body">
@@ -176,6 +179,98 @@
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    $(function () {
+      var KEY = 'pawbook_posts';
+
+      function loadPosts() {
+        try { var d = JSON.parse(localStorage.getItem(KEY)); return Array.isArray(d) ? d : []; }
+        catch (e) { return []; }
+      }
+      function savePosts() { localStorage.setItem(KEY, JSON.stringify(posts)); }
+      var posts = loadPosts();
+
+      function authorName() {
+        try {
+          var a = JSON.parse(localStorage.getItem('pawbook_account'));
+          if (a && a.name) return a.name;
+        } catch (e) {}
+        return 'Juan Dela Cruz';
+      }
+
+      function ago(ts) {
+        var m = Math.floor((Date.now() - ts) / 60000);
+        if (m < 1) return 'Just now';
+        if (m < 60) return m + ' min' + (m === 1 ? '' : 's') + ' ago';
+        var h = Math.floor(m / 60);
+        if (h < 24) return h + ' hr' + (h === 1 ? '' : 's') + ' ago';
+        var d = Math.floor(h / 24);
+        return d === 1 ? 'Yesterday' : d + ' days ago';
+      }
+
+      function render() {
+        var $wrap = $('#newPosts').empty();
+        posts.forEach(function (p) {
+          var $body = $('<div class="card-body"></div>');
+
+          var $head = $('<div class="d-flex align-items-center mb-2"></div>');
+          $head.append('<div class="bg-secondary rounded-circle me-2" style="width:32px;height:32px;"></div>');
+          var $who = $('<div></div>');
+          $who.append($('<small class="fw-bold d-block"></small>').text(p.author));
+          $who.append($('<small class="text-muted"></small>').text(ago(p.ts)));
+          $head.append($who);
+          $head.append($('<span class="badge bg-light text-dark border ms-auto"></span>').text(p.kind === 'Business' ? ('Business' + (p.type ? ' · ' + p.type : '')) : 'Customer'));
+          $body.append($head);
+
+          if (p.title) $body.append($('<h3 class="h6 fw-bold"></h3>').text(p.title));
+          $body.append($('<p class="small" style="white-space:pre-wrap;"></p>').text(p.text));
+
+          var $actions = $('<div class="d-flex gap-2"></div>');
+          var $like = $('<button type="button" class="btn btn-sm"></button>')
+            .addClass(p.liked ? 'btn-dark' : 'btn-outline-dark')
+            .text('♥ ' + p.likes)
+            .on('click', function () {
+              p.liked = !p.liked;
+              p.likes += p.liked ? 1 : -1;
+              savePosts();
+              render();
+            });
+          $actions.append($like);
+          $actions.append('<button type="button" class="btn btn-outline-dark btn-sm">💬 0</button>');
+          $actions.append('<button type="button" class="btn btn-outline-dark btn-sm">SHARE</button>');
+          $body.append($actions);
+
+          $wrap.append($('<div class="card mb-3"></div>').append($body));
+        });
+      }
+
+      function showMsg(type, html) {
+        $('#postMsg').removeClass('d-none alert-success alert-danger').addClass('alert-' + type).html(html);
+      }
+
+      $('#postForm').on('submit', function (e) {
+        e.preventDefault();
+        var text = $('#postText').val().trim();
+
+        if (localStorage.getItem('pawbook_logged_in') !== 'true') {
+          showMsg('danger', 'Please <a href="login-signup.html" class="alert-link">log in</a> to post.');
+          return;
+        }
+        if (!text) {
+          showMsg('danger', 'Write something before posting.');
+          return;
+        }
+
+        posts.unshift({ id: Date.now(), author: authorName(), text: text, ts: Date.now(), likes: 0, liked: false });
+        savePosts();
+        render();
+        $('#postText').val('');
+        showMsg('success', 'Your post is live.');
+      });
+
+      render();
+    });
+  </script>
 
 </body>
 </html>
