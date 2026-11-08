@@ -1,5 +1,3 @@
-
-
 function mockHours(overrides, sundayClosed) {
   var base = { closed: false, open: "09:00", close: "18:00" };
   var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -14,13 +12,13 @@ const mockBusinesses = [
   {
     id: 1,
     
-    image: "dogscity.jpg",                       
-    gallery: ["dogs2.jpg", "dogs3.jpg"],   
+    image: "img/dogscity.jpg",                       
+    gallery: ["img/dogs2.jpg", "img/dogs3.jpg"],   
     fields: {
       bizName: "Dogs & The City", bizType: "Pet Store, ✂️Vet & Grooming Service", bizTagline: "Gentle grooming for happy pets",
       bizDesc: "Dogs and the City understands what it means to love your pet💖#PawmilyComesFirst",
       bizPhone: "+63 917 123 4567", bizEmail: "Dogs&thecity@gmail.com", bizWebsite: "https://dogsandthecityph.com/",
-      bizSocial: "@dogsandthecityph", bizAddress: "Mall  of Asia", bizCity: "Metro Manila", bizBranches: "3",
+      bizSocial: "@dogsandthecityph", bizAddress: "Mall of Asia", bizCity: "Metro Manila", bizBranches: "3",
       bizPolicy: "Please cancel at least 24 hours before your appointment.",
       bizNotes: "Dogs must be up to date on vaccinations."
     },
@@ -42,8 +40,8 @@ const mockBusinesses = [
   {
     id: 2,
     
-    image: "petexp.jpg",                       
-    gallery: ["petexp1.jpg", "Teddy1.jpg"],   
+    image: "img/petexp.jpg",                       
+    gallery: ["img/petexp1.jpg", "img/Teddy1.jpg"],   
     fields: {
       bizName: "Pet Express", bizType: "Pet Store", bizTagline: "The best pet store",
       bizDesc: "Pet Express: the dog and cat shop 💛🐶🐱",
@@ -70,8 +68,8 @@ const mockBusinesses = [
   {
     id: 3,
    
-    image: "Abys.jpg",                       
-    gallery: ["Abby.jpg", "Abby3.jpg"],   
+    image: "img/Abys.jpg",                       
+    gallery: ["img/Abby.jpg", "img/Abby3.jpg"],   
     fields: {
       bizName: "Abby’s Paws n’ Play", bizType: "Pet playground", bizTagline: "Your Pet's favorite playground",
       bizDesc: "Pet Grooming • Pet Spa • Pet Hotel • Pet Day Care • Pet Indoor Pool • Events Place",
@@ -98,8 +96,8 @@ const mockBusinesses = [
   {
     id: 4,
     
-    image: "botique.jpg",                       
-    gallery: ["botique2.jpg", "botique3.jpg"],   
+    image: "img/botique.jpg",                       
+    gallery: ["img/botique2.jpg", "img/botique3.jpg"],   
     fields: {
       bizName: "Pretty Bubble Botique", bizType: "♛ Pet, Essentials & Makeover", bizTagline: "The best from Korea",
       bizDesc: "♛ First Best Loved Pet Boutique in the Philippines.",

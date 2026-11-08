@@ -328,7 +328,7 @@
   <script src="js/main.js"></script>
   <script>
     $(function () {
-      // Admins only
+      // admins only
       var ok = false;
       try { ok = localStorage.getItem('pawbook_logged_in') === 'true' && localStorage.getItem('pawbook_role') === 'admin'; } catch (e) {}
       if (!ok) { window.location.href = 'login-signup.html'; return; }
