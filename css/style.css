@@ -385,3 +385,7 @@ footer a:hover {
         padding: 1rem;
     }
 }
+
+/* night mode fixes */
+.js-auth-slot { visibility: hidden; }
+.js-auth-slot.js-ready { visibility: visible; }

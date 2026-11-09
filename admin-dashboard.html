@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PawBook — Admin Dashboard</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.setAttribute('data-bs-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="lib/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -22,7 +32,7 @@
           <li class="nav-item"><a class="nav-link" href="find-groomer.html">BUSINESSES</a></li>
           <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
         </ul>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 js-auth-slot">
           <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
           <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
           <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
@@ -323,59 +333,11 @@
 
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth-guard.js"></script>
   <script src="js/mock-data.js"></script>
   <script src="js/charts.js"></script>
-  <script src="js/main.js"></script>
-  <script>
-    $(function () {
-      // admins only
-      var ok = false;
-      try { ok = localStorage.getItem('pawbook_logged_in') === 'true' && localStorage.getItem('pawbook_role') === 'admin'; } catch (e) {}
-      if (!ok) { window.location.href = 'login-signup.html'; return; }
-
-      var KEY = 'pawbook_users';
-      function users() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
-      function fmt(ts) { return ts ? new Date(ts).toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Built-in'; }
-
-      function renderAdmins() {
-        var $b = $('#adminRows').empty();
-        var list = [{ name: 'PawBook Admin', email: 'admin@pawbook.com', created: 0 }]
-          .concat(users().filter(function (u) { return u.role === 'admin'; }));
-        list.forEach(function (u) {
-          $b.append($('<tr></tr>')
-            .append($('<td class="small"></td>').text(u.name))
-            .append($('<td class="small"></td>').text(u.email))
-            .append($('<td class="small"></td>').text(fmt(u.created))));
-        });
-      }
-      renderAdmins();
-
-      $('#adminModal').on('show.bs.modal', function () {
-        $('#adminForm')[0].reset(); $('#adminErr').addClass('d-none');
-      });
-
-      $('#adminForm').on('submit', function (e) {
-        e.preventDefault();
-        var name = $.trim($('#adName').val()), email = $.trim($('#adEmail').val()).toLowerCase(),
-            p1 = $('#adPass').val(), p2 = $('#adPass2').val(), err = '';
-        if (!name) err = 'Enter a name.';
-        else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) err = 'Enter a valid email address.';
-        else if (p1.length < 8) err = 'Password must be at least 8 characters.';
-        else if (p1 !== p2) err = 'Passwords do not match.';
-        else if (email === 'admin@pawbook.com' || users().some(function (u) { return u.email === email; })) err = 'An account with that email already exists.';
-        if (err) { $('#adminErr').text(err).removeClass('d-none'); return; }
-
-        var list = users();
-        list.push({ name: name, email: email, password: p1, role: 'admin', created: Date.now() });
-        localStorage.setItem(KEY, JSON.stringify(list));
-        bootstrap.Modal.getInstance(document.getElementById('adminModal')).hide();
-        renderAdmins();
-        $('#adminAlert').html('<div class="alert alert-success small alert-dismissible" role="alert"></div>');
-        $('#adminAlert .alert').text('Admin account created for ' + name + ' (' + email + ').')
-          .append('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>');
-      });
-    });
-  </script>
-
+  <script src="js/pages/admin-dashboard.js"></script>
 </body>
 </html>

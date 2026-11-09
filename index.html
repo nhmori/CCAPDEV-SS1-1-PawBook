@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PawBook — Home</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.setAttribute('data-bs-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="lib/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -21,7 +31,7 @@
           <li class="nav-item"><a class="nav-link" href="find-groomer.html">BUSINESSES</a></li>
           <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
         </ul>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 js-auth-slot">
           <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
           <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
           <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
@@ -185,57 +195,8 @@
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/utils.js"></script>
   <script src="js/businesses-data.js"></script>
-  <script>
-    $(function () {
-    
-      PawBookBiz.all().slice(0, 4).forEach(function (b) {
-        var fl = b.fields;
-        var $body = $('<div class="card-body"></div>')
-          .append($('<h5 class="card-title h6"></h5>').text(fl.bizName));
-        if (b.rating) {
-          $body.append($('<p class="small mb-1"></p>').text('★ ' + b.rating.score + ' ')
-            .append($('<span class="text-muted"></span>').text('(' + b.rating.count + ' reviews)')));
-        }
-        $body.append($('<p class="small text-muted mb-2"></p>').text(fl.bizCity));
-        var $badges = $('<div class="d-flex flex-wrap gap-1 mb-3"></div>');
-        (b.services || []).slice(0, 2).forEach(function (s) {
-          $badges.append($('<span class="badge bg-light text-dark border"></span>').text(s.name));
-        });
-        $body.append($badges);
-        $body.append($('<a class="btn btn-outline-dark btn-sm w-100">VIEW PROFILE</a>').attr('href', 'business-profile.html?id=' + b.id));
-
-        var $card = $('<div class="card h-100"></div>')
-          .append(PawBookBiz.photo(b.image, 160, fl.bizName))
-          .append($body);
-        $('#featuredList').append($('<div class="col-md-6 col-lg-3"></div>').append($card));
-      });
-
-    
-      PawBookBiz.cities().forEach(function (c) { $('#hLocation').append($('<option></option>').val(c).text(c)); });
-      PawBookBiz.serviceNames().forEach(function (n) { $('#hService').append($('<option></option>').val(n).text(n)); });
-
-      
-      function go(p) {
-        var qs = $.param(p);
-        window.location.href = 'find-groomer.html' + (qs ? '?' + qs : '');
-      }
-      $('#heroSearch').on('submit', function (e) {
-        e.preventDefault();
-        var q = $('#heroQ').val().trim();
-        go(q ? { q: q } : {});
-      });
-      $('#homeFilter').on('submit', function (e) {
-        e.preventDefault();
-        var p = {};
-        [['location', '#hLocation'], ['service', '#hService'], ['price', '#hPrice'], ['rating', '#hRating']].forEach(function (x) {
-          var v = $(x[1]).val();
-          if (v) p[x[0]] = v;
-        });
-        go(p);
-      });
-    });
-  </script>
-
+  <script src="js/pages/index.js"></script> 
 </body>
 </html>
