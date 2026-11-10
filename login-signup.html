@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PawBook — Log In / Sign Up</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawBook — Log In / Sign Up</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.setAttribute('data-bs-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="lib/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -21,7 +31,7 @@
           <li class="nav-item"><a class="nav-link" href="find-groomer.html">BUSINESSES</a></li>
           <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
         </ul>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 js-auth-slot">
           <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
           <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
           <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
@@ -124,6 +134,5 @@
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
-
 </body>
 </html>

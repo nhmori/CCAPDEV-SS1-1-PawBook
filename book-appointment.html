@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PawBook — Book Appointment</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.setAttribute('data-bs-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="lib/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -21,7 +31,7 @@
           <li class="nav-item"><a class="nav-link active" href="find-groomer.html">BUSINESSES</a></li>
           <li class="nav-item"><a class="nav-link" href="community.html">COMMUNITY</a></li>
         </ul>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 js-auth-slot">
           <a href="login-signup.html" class="btn btn-outline-dark btn-sm">LOG IN</a>
           <a href="login-signup.html" class="btn btn-dark btn-sm">SIGN UP</a>
           <button class="btn btn-outline-dark btn-sm" id="themeToggle">🌙</button>
@@ -217,240 +227,9 @@
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/mock-data.js"></script>
+  <script src="js/utils.js"></script>
   <script src="js/businesses-data.js"></script>
-  <script>
-    $(function () {
-      var OWNER_ID = 1;
-      var PROFILE_KEY = 'pawbook_business_profile';
-      var BOOKINGS_KEY = 'pawbook_bookings';
-      var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-      var SLOT_STEP = 30; // minutes
-
-      var _id = parseInt(new URLSearchParams(window.location.search).get('id'), 10);
-      if (_id) $('#backLink, #cancelLink').attr('href', 'business-profile.html?id=' + _id);
-
-      if (typeof mockBusinesses === 'undefined') {
-        $('#bookingForm').addClass('d-none');
-        $('#alertRegion').html('<div class="alert alert-secondary small">Business data could not be loaded. Check that js/businesses-data.js is included.</div>');
-        return;
-      }
-
-      
-      var pets = [];
-      var rawPets = localStorage.getItem('pawbook_pets_v2');
-      if (rawPets !== null) {
-        try { pets = JSON.parse(rawPets) || []; } catch (e) { pets = []; }
-      } else if (typeof mockCustomerPets !== 'undefined') {
-        pets = mockCustomerPets;
-      }
-
-      var params = new URLSearchParams(window.location.search);
-      var bizId = parseInt(params.get('id'), 10);
-      if (!bizId || !mockBusinesses.some(function (b) { return b.id === bizId; })) {
-        // Opened without a business (for example by typing the address): go pick one first
-        window.location.replace('find-groomer.html');
-        return;
-      }
-      var biz = null, data = null;
-
-      function money(n) { return '₱' + Number(n).toLocaleString(); }
-      function priceOf(s) { return Number(String(s.price).replace(/,/g, '')) || 0; }
-      function toMin(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
-      function to12h(min) {
-        var h = Math.floor(min / 60), m = min % 60, ap = h >= 12 ? 'PM' : 'AM';
-        return ((h % 12) || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
-      }
-      function parseDate(v) { var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
-      function fmtDate(v) {
-        return parseDate(v).toLocaleDateString('en-PH', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-      }
-      function isoDate(d) {
-        var m = d.getMonth() + 1, day = d.getDate();
-        return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
-      }
-      function hash(str) { var h = 0; for (var i = 0; i < str.length; i++) { h = (h * 31 + str.charCodeAt(i)) >>> 0; } return h; }
-      function showAlert(type, msg) {
-        var $a = $('<div class="alert alert-' + type + ' small alert-dismissible mb-0" role="alert"></div>').text(msg)
-          .append('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>');
-        $('#alertRegion').empty().append($a);
-      }
-
-      function loadBusiness(id) {
-        biz = mockBusinesses.filter(function (b) { return b.id === id; })[0];
-        bizId = biz.id;
-        data = { fields: biz.fields, services: biz.services, hours: biz.hours };
-        if (biz.id === OWNER_ID) {
-          try {
-            var saved = JSON.parse(localStorage.getItem(PROFILE_KEY));
-            if (saved && saved.fields && saved.fields.bizName) data = saved;
-          } catch (e) {}
-        }
-        $('#bizName').text(data.fields.bizName);
-        $('#bizPlace').text([data.fields.bizAddress, data.fields.bizCity].filter(Boolean).join(', '));
-        document.title = 'PawBook — Book ' + data.fields.bizName;
-        $('#backLink, #cancelLink').attr('href', 'business-profile.html?id=' + bizId);
-        $('#sumBiz').text(data.fields.bizName);
-        $('#sumLocation').text([data.fields.bizAddress, data.fields.bizCity].filter(Boolean).join(', '));
-        $('#policyText').text(data.fields.bizPolicy || '');
-        buildServices(); buildSlots(); updateSummary();
-      }
-
-
-      function buildServices() {
-        var $l = $('#serviceList').empty();
-        var preselect = (params.get('service') || '').toLowerCase();
-        (data.services || []).forEach(function (s, i) {
-          var id = 'svc' + i;
-          var $row = $('<label class="list-group-item d-flex align-items-center gap-3" style="cursor:pointer;"></label>').attr('for', id);
-          $row.append($('<input class="form-check-input flex-shrink-0 svc-check" type="checkbox">').attr('id', id).val(i)
-            .prop('checked', preselect && s.name.toLowerCase() === preselect));
-          $row.append($('<div class="flex-grow-1"></div>')
-            .append($('<div class="small fw-bold"></div>').text(s.name))
-            .append($('<div class="small text-muted"></div>').text((s.time || '—') + ' min')));
-          $row.append($('<div class="small fw-bold"></div>').text(money(priceOf(s))));
-          $l.append($row);
-        });
-      }
-      function selectedServices() {
-        return $('.svc-check:checked').map(function () { return data.services[+this.value]; }).get();
-      }
-      $('#serviceList').on('change', '.svc-check', function () { buildSlots(); updateSummary(); });
-
-      var today = new Date();
-      $('#apptDate').attr('min', isoDate(today));
-      var maxD = new Date(today); maxD.setDate(maxD.getDate() + 60);
-      $('#apptDate').attr('max', isoDate(maxD));
-      $('#apptDate').on('change', function () { buildSlots(); updateSummary(); });
-
-      function totalDuration() {
-        return selectedServices().reduce(function (t, s) { return t + (Number(s.time) || 60); }, 0);
-      }
-
-      function buildSlots() {
-        var $s = $('#slotList').empty();
-        var date = $('#apptDate').val(), dur = totalDuration();
-        var $hint = $('#slotHint');
-        if (!dur) { $hint.text('Choose at least one service to see available times.'); return; }
-        if (!date) { $hint.text('Choose a date to see available times.'); return; }
-
-        var d = parseDate(date);
-        var h = (data.hours || {})[DAYS[(d.getDay() + 6) % 7]];
-        if (!h || h.closed) { $hint.text(data.fields.bizName + ' is closed on this day. Try another date.'); return; }
-
-        var open = toMin(h.open), close = toMin(h.close);
-        var nowMin = (date === isoDate(today)) ? today.getHours() * 60 + today.getMinutes() + 30 : -1;
-        var count = 0;
-        for (var t = open; t + dur <= close; t += SLOT_STEP) {
-          var id = 'slot' + t;
-          var taken = (hash(bizId + date + t) % 5 === 0) || t < nowMin; // simulated availability
-          var $in = $('<input type="radio" class="btn-check" name="slot" autocomplete="off">').attr('id', id).val(t).prop('disabled', taken);
-          var $lb = $('<label class="btn btn-outline-dark btn-sm"></label>').attr('for', id).text(to12h(t));
-          $s.append($in, $lb);
-          if (!taken) count++;
-        }
-        $hint.text(count ? count + ' times available. Your visit takes about ' + dur + ' minutes.' : 'No times left on this day. Try another date.');
-      }
-      $('#slotList').on('change', 'input[name=slot]', updateSummary);
-
-      function buildPets() {
-        var $p = $('#petList').empty();
-        pets.forEach(function (p, i) {
-          var id = 'pet' + i;
-          var $col = $('<div class="col-6 col-md-4"></div>');
-          $col.append($('<input type="radio" class="btn-check" name="pet" autocomplete="off">').attr('id', id).val(i));
-          $col.append($('<label class="btn btn-outline-dark w-100 text-start"></label>').attr('for', id)
-            .append($('<div class="small fw-bold"></div>').text(p.name))
-            .append($('<div class="small opacity-75"></div>').text(p.breed || '')));
-          $p.append($col);
-        });
-        var $new = $('<div class="col-6 col-md-4"></div>');
-        $new.append('<input type="radio" class="btn-check" name="pet" id="petNew" value="new" autocomplete="off">');
-        $new.append('<label class="btn btn-outline-dark w-100 text-start" for="petNew"><div class="small fw-bold">+ Add new pet</div><div class="small opacity-75">Enter details</div></label>');
-        $p.append($new);
-      }
-      $('#petList').on('change', 'input[name=pet]', function () {
-        $('#newPetFields').toggleClass('d-none', $('input[name=pet]:checked').val() !== 'new');
-        updateSummary();
-      });
-      $('#newPetName').on('input', updateSummary);
-
-      function selectedPetName() {
-        var v = $('input[name=pet]:checked').val();
-        if (v === undefined) return '';
-        if (v === 'new') return $('#newPetName').val().trim();
-        return pets[+v].name;
-      }
-
-      function updateSummary() {
-        var sv = selectedServices(), dur = totalDuration();
-        var $l = $('#sumServices').empty();
-        if (!sv.length) $l.append('<li class="text-muted">None selected</li>');
-        var total = 0;
-        sv.forEach(function (s) {
-          total += priceOf(s);
-          $l.append($('<li class="d-flex justify-content-between mb-1"></li>')
-            .append($('<span></span>').text(s.name)).append($('<span></span>').text(money(priceOf(s)))));
-        });
-        $('#sumTotal').text(money(total));
-        $('#sumDuration').text(dur ? dur + ' min' : '—');
-        var date = $('#apptDate').val();
-        $('#sumDate').text(date ? fmtDate(date) : '—');
-        var slot = $('input[name=slot]:checked').val();
-        $('#sumTime').text(slot !== undefined ? to12h(+slot) : '—');
-        $('#sumPet').text(selectedPetName() || '—');
-      }
-
-      $('#bookingForm').on('submit', function (e) {
-        e.preventDefault();
-        var form = this, errors = [];
-        $(form).addClass('was-validated');
-        if (!selectedServices().length) errors.push('Select at least one service.');
-        if (!$('#apptDate').val()) errors.push('Choose a date.');
-        else if ($('input[name=slot]:checked').val() === undefined) errors.push('Pick an available time.');
-        if ($('input[name=pet]:checked').val() === undefined) errors.push('Select your pet.');
-        $('#newPetName').prop('required', $('input[name=pet]:checked').val() === 'new');
-        if (errors.length || !form.checkValidity()) {
-          showAlert('danger', errors.length ? errors.join(' ') : 'Some required fields are missing or invalid. Check the highlighted fields and try again.');
-          $('html, body').animate({ scrollTop: 0 }, 200);
-          return;
-        }
-
-        var $btn = $('#confirmBtn').prop('disabled', true).text('SENDING...');
-        setTimeout(function () {
-          var sv = selectedServices(), total = sv.reduce(function (t, s) { return t + priceOf(s); }, 0);
-          var ref = 'PB-' + Math.random().toString(36).slice(2, 8).toUpperCase();
-          var slot = +$('input[name=slot]:checked').val();
-          var booking = {
-            ref: ref, businessId: bizId, business: data.fields.bizName,
-            date: $('#apptDate').val(), time: to12h(slot), pet: selectedPetName(),
-            services: sv.map(function (s) { return s.name; }), total: total, status: 'Pending',
-            customer: { name: $('#custName').val().trim(), phone: $('#custPhone').val().trim(), email: $('#custEmail').val().trim() },
-            notes: $('#custNotes').val().trim()
-          };
-          try {
-            var all = JSON.parse(localStorage.getItem(BOOKINGS_KEY)) || [];
-            all.push(booking);
-            localStorage.setItem(BOOKINGS_KEY, JSON.stringify(all));
-          } catch (err) {}
-
-          $('#confRef').text(ref);
-          $('#confBiz').text(booking.business);
-          $('#confDate').text(fmtDate(booking.date));
-          $('#confTime').text(booking.time);
-          $('#confPet').text(booking.pet);
-          $('#confServices').text(booking.services.join(', '));
-          $('#confTotal').text(money(total));
-          $('#bookingForm, #alertRegion').addClass('d-none');
-          $('#confirmation').removeClass('d-none');
-          $('html, body').animate({ scrollTop: 0 }, 200);
-        }, 800);
-      });
-
-      buildPets();
-      loadBusiness(bizId);
-    });
-  </script>
-
+  <script src="js/booking-data.js"></script>
+  <script src="js/pages/book-appointment.js"></script>
 </body>
 </html>
